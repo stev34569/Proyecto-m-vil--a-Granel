@@ -122,10 +122,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                               elevation: 0.0,
                               tabs: [
                                 Tab(
-                                  text: 'Sign In',
+                                  text: 'Login',
                                 ),
                                 Tab(
-                                  text: 'Sign Up',
+                                  text: 'Registrar',
                                 ),
                               ],
                             ),
@@ -149,7 +149,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 .emailAddressLoginController,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Email Address',
+                                              labelText: 'Email ',
                                               labelStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -234,7 +234,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             obscureText:
                                                 !_model.passwordLoginVisibility,
                                             decoration: InputDecoration(
-                                              labelText: 'Password',
+                                              labelText: 'Contraseña',
                                               labelStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -350,7 +350,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               }
 
                                               context.goNamedAuth(
-                                                  'Home', context.mounted);
+                                                  'home', context.mounted);
                                             },
                                             text: 'Login',
                                             options: FFButtonOptions(
@@ -389,7 +389,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               context.pushNamed(
                                                   'recuperarContrasenna');
                                             },
-                                            text: 'Forgot Password?',
+                                            text: '¿Recuperar contraseña?',
                                             options: FFButtonOptions(
                                               width: 170.0,
                                               height: 40.0,
@@ -756,7 +756,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               }
 
                                               context.goNamedAuth(
-                                                  'Home', context.mounted);
+                                                  'home', context.mounted);
                                             },
                                             text: 'Create Account',
                                             options: FFButtonOptions(

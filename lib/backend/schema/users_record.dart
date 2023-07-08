@@ -46,6 +46,16 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "administrador" field.
+  bool? _administrador;
+  bool get administrador => _administrador ?? false;
+  bool hasAdministrador() => _administrador != null;
+
+  // "empleado" field.
+  bool? _empleado;
+  bool get empleado => _empleado ?? false;
+  bool hasEmpleado() => _empleado != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -53,6 +63,8 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _administrador = snapshotData['administrador'] as bool?;
+    _empleado = snapshotData['empleado'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -95,6 +107,8 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  bool? administrador,
+  bool? empleado,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -104,6 +118,8 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'administrador': administrador,
+      'empleado': empleado,
     }.withoutNulls,
   );
 
@@ -120,7 +136,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.administrador == e2?.administrador &&
+        e1?.empleado == e2?.empleado;
   }
 
   @override
@@ -130,7 +148,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.administrador,
+        e?.empleado
       ]);
 
   @override

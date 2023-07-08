@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/confirmacior_recuperar_widget.dart';
-import '/flutter_flow/flutter_flow_button_tabbar.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,13 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class RecuperarContrasennaModel extends FlutterFlowModel {
+class DetalleAdministradorModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for email widget.
-  TextEditingController? emailController;
-  String? Function(BuildContext, String?)? emailControllerValidator;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered1 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered2 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered3 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered4 = false;
 
   /// Initialization and disposal methods.
 
@@ -22,7 +26,6 @@ class RecuperarContrasennaModel extends FlutterFlowModel {
 
   void dispose() {
     unfocusNode.dispose();
-    emailController?.dispose();
   }
 
   /// Action blocks are added here.

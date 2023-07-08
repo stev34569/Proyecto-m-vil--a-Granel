@@ -175,7 +175,7 @@ class _ConfirmaciorRecuperarWidgetState
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  context.pushNamed('Login');
+                                  context.pushNamed('login');
                                 },
                                 text: 'LOGIN',
                                 options: FFButtonOptions(

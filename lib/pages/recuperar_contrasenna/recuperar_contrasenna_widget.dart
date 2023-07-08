@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/confirmacior_recuperar_widget.dart';
+import '/componentes/confirmacior_recuperar/confirmacior_recuperar_widget.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -89,7 +89,7 @@ class _RecuperarContrasennaWidgetState
                       child: Icon(
                         Icons.arrow_back,
                         color: Color(0xFFBDEF39),
-                        size: 40.0,
+                        size: 45.0,
                       ),
                     ),
                   ),
