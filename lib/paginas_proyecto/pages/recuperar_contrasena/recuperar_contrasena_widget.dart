@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/componentes/confirmacior_recuperar/confirmacior_recuperar_widget.dart';
+import '/componentes_proyecto/confirmacior_recuperar/confirmacior_recuperar_widget.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,27 +7,26 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'recuperar_contrasenna_model.dart';
-export 'recuperar_contrasenna_model.dart';
+import 'recuperar_contrasena_model.dart';
+export 'recuperar_contrasena_model.dart';
 
-class RecuperarContrasennaWidget extends StatefulWidget {
-  const RecuperarContrasennaWidget({Key? key}) : super(key: key);
+class RecuperarContrasenaWidget extends StatefulWidget {
+  const RecuperarContrasenaWidget({Key? key}) : super(key: key);
 
   @override
-  _RecuperarContrasennaWidgetState createState() =>
-      _RecuperarContrasennaWidgetState();
+  _RecuperarContrasenaWidgetState createState() =>
+      _RecuperarContrasenaWidgetState();
 }
 
-class _RecuperarContrasennaWidgetState
-    extends State<RecuperarContrasennaWidget> {
-  late RecuperarContrasennaModel _model;
+class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget> {
+  late RecuperarContrasenaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RecuperarContrasennaModel());
+    _model = createModel(context, () => RecuperarContrasenaModel());
 
     _model.emailController ??= TextEditingController();
   }
@@ -104,8 +103,8 @@ class _RecuperarContrasennaWidgetState
                           borderRadius: BorderRadius.circular(15.0),
                           child: Image.asset(
                             'assets/images/WhatsApp_Image_2023-07-06_at_15.38.37.jpeg',
-                            width: 160.0,
-                            height: 105.0,
+                            width: MediaQuery.sizeOf(context).width * 0.5,
+                            height: MediaQuery.sizeOf(context).height * 0.15,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -128,7 +127,7 @@ class _RecuperarContrasennaWidgetState
                                   .override(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF0F1113),
-                                    fontSize: 18.0,
+                                    fontSize: 25.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               unselectedLabelStyle: FlutterFlowTheme.of(context)
@@ -136,10 +135,10 @@ class _RecuperarContrasennaWidgetState
                                   .override(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF0F1113),
-                                    fontSize: 18.0,
+                                    fontSize: 25.0,
                                     fontWeight: FontWeight.w500,
                                   ),
-                              labelColor: Colors.white,
+                              labelColor: Color(0xE7FFFFFF),
                               borderWidth: 0.0,
                               borderRadius: 0.0,
                               elevation: 0.0,
@@ -168,7 +167,7 @@ class _RecuperarContrasennaWidgetState
                                             controller: _model.emailController,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Email',
+                                              labelText: 'Correo',
                                               labelStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium

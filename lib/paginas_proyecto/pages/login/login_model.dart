@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -21,6 +22,15 @@ class LoginModel extends FlutterFlowModel {
   // State field(s) for emailAddress widget.
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  // State field(s) for nombreCompleto widget.
+  TextEditingController? nombreCompletoController;
+  String? Function(BuildContext, String?)? nombreCompletoControllerValidator;
+  // State field(s) for numeroTelefonico widget.
+  TextEditingController? numeroTelefonicoController;
+  String? Function(BuildContext, String?)? numeroTelefonicoControllerValidator;
+  // State field(s) for cedula widget.
+  TextEditingController? cedulaController;
+  String? Function(BuildContext, String?)? cedulaControllerValidator;
   // State field(s) for password widget.
   TextEditingController? passwordController;
   late bool passwordVisibility;
@@ -43,6 +53,9 @@ class LoginModel extends FlutterFlowModel {
     emailAddressLoginController?.dispose();
     passwordLoginController?.dispose();
     emailAddressController?.dispose();
+    nombreCompletoController?.dispose();
+    numeroTelefonicoController?.dispose();
+    cedulaController?.dispose();
     passwordController?.dispose();
     passwordConfirmController?.dispose();
   }

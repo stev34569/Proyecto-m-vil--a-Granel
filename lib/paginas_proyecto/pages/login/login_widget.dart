@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -29,6 +30,9 @@ class _LoginWidgetState extends State<LoginWidget> {
     _model.emailAddressLoginController ??= TextEditingController();
     _model.passwordLoginController ??= TextEditingController();
     _model.emailAddressController ??= TextEditingController();
+    _model.nombreCompletoController ??= TextEditingController();
+    _model.numeroTelefonicoController ??= TextEditingController();
+    _model.cedulaController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.passwordConfirmController ??= TextEditingController();
   }
@@ -81,8 +85,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           borderRadius: BorderRadius.circular(15.0),
                           child: Image.asset(
                             'assets/images/WhatsApp_Image_2023-07-06_at_15.38.37.jpeg',
-                            width: 160.0,
-                            height: 105.0,
+                            width: MediaQuery.sizeOf(context).width * 0.5,
+                            height: MediaQuery.sizeOf(context).height * 0.15,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -117,6 +121,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     fontWeight: FontWeight.w500,
                                   ),
                               labelColor: Colors.white,
+                              unselectedLabelColor: Color(0x7639D2C0),
                               borderWidth: 0.0,
                               borderRadius: 0.0,
                               elevation: 0.0,
@@ -387,7 +392,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               context.pushNamed(
-                                                  'recuperarContrasenna');
+                                                  'recuperarContrasena');
                                             },
                                             text: '¿Recuperar contraseña?',
                                             options: FFButtonOptions(
@@ -404,7 +409,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       .override(
                                                         fontFamily: 'Outfit',
                                                         color: Colors.white,
-                                                        fontSize: 18.0,
+                                                        fontSize: 30.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -436,7 +441,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 _model.emailAddressController,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Email Address',
+                                              labelText: 'Email',
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .titleSmall
@@ -518,11 +523,265 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   0.0, 12.0, 0.0, 0.0),
                                           child: TextFormField(
                                             controller:
+                                                _model.nombreCompletoController,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Nombre completo',
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        color:
+                                                            Color(0xFF57636C),
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                              hintStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Lexend Deca',
+                                                    color: Color(0xFF95A1AC),
+                                                    fontSize: 14.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              contentPadding:
+                                                  EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 24.0,
+                                                          20.0, 24.0),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: Color(0xFF14181B),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            maxLines: null,
+                                            validator: _model
+                                                .nombreCompletoControllerValidator
+                                                .asValidator(context),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: TextFormField(
+                                            controller: _model
+                                                .numeroTelefonicoController,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Número de teléfono',
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        color:
+                                                            Color(0xFF57636C),
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                              hintStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Lexend Deca',
+                                                    color: Color(0xFF95A1AC),
+                                                    fontSize: 14.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              contentPadding:
+                                                  EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 24.0,
+                                                          20.0, 24.0),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: Color(0xFF14181B),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            maxLines: null,
+                                            validator: _model
+                                                .numeroTelefonicoControllerValidator
+                                                .asValidator(context),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: TextFormField(
+                                            controller: _model.cedulaController,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Cédula',
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        color:
+                                                            Color(0xFF57636C),
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                              hintStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Lexend Deca',
+                                                    color: Color(0xFF95A1AC),
+                                                    fontSize: 14.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              contentPadding:
+                                                  EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 24.0,
+                                                          20.0, 24.0),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: Color(0xFF14181B),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                            maxLines: null,
+                                            validator: _model
+                                                .cedulaControllerValidator
+                                                .asValidator(context),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: TextFormField(
+                                            controller:
                                                 _model.passwordController,
                                             obscureText:
                                                 !_model.passwordVisibility,
                                             decoration: InputDecoration(
-                                              labelText: 'Password',
+                                              labelText: 'Contraseña',
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .titleSmall
@@ -626,7 +885,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             obscureText: !_model
                                                 .passwordConfirmVisibility,
                                             decoration: InputDecoration(
-                                              labelText: 'Confirm Password',
+                                              labelText: 'Confirmar contraseña',
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .titleSmall
@@ -755,10 +1014,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 return;
                                               }
 
+                                              await UsersRecord.collection
+                                                  .doc(user.uid)
+                                                  .update(createUsersRecordData(
+                                                    phoneNumber: _model
+                                                        .numeroTelefonicoController
+                                                        .text,
+                                                    displayName: _model
+                                                        .nombreCompletoController
+                                                        .text,
+                                                    cedula: int.tryParse(_model
+                                                        .cedulaController.text),
+                                                  ));
+
                                               context.goNamedAuth(
                                                   'home', context.mounted);
                                             },
-                                            text: 'Create Account',
+                                            text: 'Crear cuenta',
                                             options: FFButtonOptions(
                                               width: 230.0,
                                               height: 50.0,

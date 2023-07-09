@@ -96,19 +96,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => HomeWidget(),
         ),
         FFRoute(
-          name: 'recuperarContrasenna',
-          path: '/recuperarContrasenna',
-          builder: (context, params) => RecuperarContrasennaWidget(),
+          name: 'recuperarContrasena',
+          path: '/recuperarContrasena',
+          builder: (context, params) => RecuperarContrasenaWidget(),
         ),
         FFRoute(
           name: 'detalleAdministrador',
           path: '/detalleAdministrador',
           builder: (context, params) => DetalleAdministradorWidget(),
-        ),
-        FFRoute(
-          name: 'empleado',
-          path: '/empleado',
-          builder: (context, params) => EmpleadoWidget(),
         ),
         FFRoute(
           name: 'listadoUsuarios',
@@ -119,6 +114,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Prueba',
           path: '/prueba',
           builder: (context, params) => PruebaWidget(),
+        ),
+        FFRoute(
+          name: 'empleado',
+          path: '/empleado',
+          builder: (context, params) => EmpleadoWidget(),
+        ),
+        FFRoute(
+          name: 'registrarEmpleado',
+          path: '/registrarEmpleado',
+          builder: (context, params) => RegistrarEmpleadoWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
