@@ -40,6 +40,8 @@ class _ConfirmaciorRecuperarWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 60.0),
       child: Container(
@@ -83,7 +85,7 @@ class _ConfirmaciorRecuperarWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 16.0, 0.0),
                                 child: Text(
-                                  'Recuperar contraseña exitoso',
+                                  'Contraseña recuperada con éxito',
                                   style: FlutterFlowTheme.of(context)
                                       .headlineMedium,
                                 ),
@@ -99,7 +101,7 @@ class _ConfirmaciorRecuperarWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 0.0),
                                 child: Text(
-                                  'Favor revisar su correo electronico que registro  en nuestra aplicación.',
+                                  'Por favor revise su correo electronico.',
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),

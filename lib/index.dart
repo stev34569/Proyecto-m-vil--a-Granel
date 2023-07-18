@@ -1,14 +1,28 @@
 // Export pages
-export '/paginas_proyecto/pages/login/login_widget.dart' show LoginWidget;
-export '/paginas_proyecto/pages/home/home_widget.dart' show HomeWidget;
-export '/paginas_proyecto/pages/recuperar_contrasena/recuperar_contrasena_widget.dart'
+export '/login/login/login_widget.dart' show LoginWidget;
+export '/paginas_proyecto/home/home/home_widget.dart' show HomeWidget;
+export '/login/recuperar_contrasena/recuperar_contrasena_widget.dart'
     show RecuperarContrasenaWidget;
-export '/paginas_proyecto/pages/detalle_administrador/detalle_administrador_widget.dart'
-    show DetalleAdministradorWidget;
-export '/paginas_proyecto/pages/listado_usuarios/listado_usuarios_widget.dart'
+export '/usuarios/perfil_administrador/perfil_administrador_widget.dart'
+    show PerfilAdministradorWidget;
+export '/pruebas/listado_usuarios/listado_usuarios_widget.dart'
     show ListadoUsuariosWidget;
-export '/prueba/prueba_widget.dart' show PruebaWidget;
-export '/paginas_proyecto/pages/empleado/empleado_widget.dart'
-    show EmpleadoWidget;
-export '/paginas_proyecto/pages/registrar_empleado/registrar_empleado_widget.dart'
+export '/pruebas/perfil_empleado_prueba/perfil_empleado_prueba_widget.dart'
+    show PerfilEmpleadoPruebaWidget;
+export '/usuarios/registrar_empleado/registrar_empleado_widget.dart'
     show RegistrarEmpleadoWidget;
+export '/pruebas/perfil_admin_pruebas/perfil_admin_pruebas_widget.dart'
+    show PerfilAdminPruebasWidget;
+export '/pruebas/lista_usuarios_uno/lista_usuarios_uno_widget.dart'
+    show ListaUsuariosUnoWidget;
+export '/registrar_producto/categoria/categoria_widget.dart'
+    show CategoriaWidget;
+export '/registrar_producto/producto/producto_widget.dart' show ProductoWidget;
+export '/registrar_producto/registrar_producto/registrar_producto_widget.dart'
+    show RegistrarProductoWidget;
+export '/usuarios/cambiar_contrasena/cambiar_contrasena_widget.dart'
+    show CambiarContrasenaWidget;
+export '/usuarios/lista_usuarios/lista_usuarios_widget.dart'
+    show ListaUsuariosWidget;
+export '/usuarios/perfil_empleado/perfil_empleado_widget.dart'
+    show PerfilEmpleadoWidget;

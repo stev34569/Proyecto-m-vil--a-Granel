@@ -101,9 +101,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RecuperarContrasenaWidget(),
         ),
         FFRoute(
-          name: 'detalleAdministrador',
-          path: '/detalleAdministrador',
-          builder: (context, params) => DetalleAdministradorWidget(),
+          name: 'perfilAdministrador',
+          path: '/perfilAdministrador',
+          builder: (context, params) => PerfilAdministradorWidget(),
         ),
         FFRoute(
           name: 'listadoUsuarios',
@@ -111,19 +111,54 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ListadoUsuariosWidget(),
         ),
         FFRoute(
-          name: 'Prueba',
-          path: '/prueba',
-          builder: (context, params) => PruebaWidget(),
-        ),
-        FFRoute(
-          name: 'empleado',
-          path: '/empleado',
-          builder: (context, params) => EmpleadoWidget(),
+          name: 'perfilEmpleadoPrueba',
+          path: '/perfilEmpleadoPrueba',
+          builder: (context, params) => PerfilEmpleadoPruebaWidget(),
         ),
         FFRoute(
           name: 'registrarEmpleado',
           path: '/registrarEmpleado',
           builder: (context, params) => RegistrarEmpleadoWidget(),
+        ),
+        FFRoute(
+          name: 'perfilAdminPruebas',
+          path: '/perfilAdminPruebas',
+          builder: (context, params) => PerfilAdminPruebasWidget(),
+        ),
+        FFRoute(
+          name: 'listaUsuariosUno',
+          path: '/listaUsuariosUno',
+          builder: (context, params) => ListaUsuariosUnoWidget(),
+        ),
+        FFRoute(
+          name: 'Categoria',
+          path: '/categoria',
+          builder: (context, params) => CategoriaWidget(),
+        ),
+        FFRoute(
+          name: 'Producto',
+          path: '/producto',
+          builder: (context, params) => ProductoWidget(),
+        ),
+        FFRoute(
+          name: 'registrarProducto',
+          path: '/registrarProducto',
+          builder: (context, params) => RegistrarProductoWidget(),
+        ),
+        FFRoute(
+          name: 'cambiarContrasena',
+          path: '/cambiarContrasena',
+          builder: (context, params) => CambiarContrasenaWidget(),
+        ),
+        FFRoute(
+          name: 'listaUsuarios',
+          path: '/listaUsuarios',
+          builder: (context, params) => ListaUsuariosWidget(),
+        ),
+        FFRoute(
+          name: 'perfilEmpleado',
+          path: '/perfilEmpleado',
+          builder: (context, params) => PerfilEmpleadoWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -308,7 +343,9 @@ class FFRoute {
                     width: 50.0,
                     height: 50.0,
                     child: CircularProgressIndicator(
-                      color: FlutterFlowTheme.of(context).primary,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        FlutterFlowTheme.of(context).primary,
+                      ),
                     ),
                   ),
                 )
