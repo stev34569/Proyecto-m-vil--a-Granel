@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -8,6 +9,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +26,38 @@ class PerfilAdministradorWidget extends StatefulWidget {
       _PerfilAdministradorWidgetState();
 }
 
-class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget> {
+class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
+    with TickerProviderStateMixin {
   late PerfilAdministradorModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'rowOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'columnOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -250,7 +282,8 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget> {
                                       ),
                                     ),
                                   ],
-                                ),
+                                ).animateOnPageLoad(
+                                    animationsMap['rowOnPageLoadAnimation']!),
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -734,7 +767,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget> {
                                   .override(
                                     fontFamily: 'Readex Pro',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                        .primaryText,
                                     fontSize: 20.0,
                                   ),
                               elevation: 3.0,
@@ -766,7 +799,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget> {
                                   .override(
                                     fontFamily: 'Readex Pro',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                        .primaryText,
                                     fontSize: 20.0,
                                   ),
                               elevation: 3.0,
@@ -780,7 +813,8 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget> {
                         ),
                       ],
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['columnOnPageLoadAnimation']!),
                 ],
               ),
             ),

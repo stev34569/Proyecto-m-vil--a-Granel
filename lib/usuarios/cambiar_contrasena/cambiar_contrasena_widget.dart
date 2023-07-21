@@ -1,10 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'cambiar_contrasena_model.dart';
@@ -18,10 +22,62 @@ class CambiarContrasenaWidget extends StatefulWidget {
       _CambiarContrasenaWidgetState();
 }
 
-class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget> {
+class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
+    with TickerProviderStateMixin {
   late CambiarContrasenaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'buttonOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -95,17 +151,36 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
-                  child: Text(
-                    'Cambiar contraseña',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w600,
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 0.83,
+                      height: MediaQuery.sizeOf(context).height * 0.065,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Text(
+                          'Cambiar contraseña',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color:
+                                    FlutterFlowTheme.of(context).customColor3,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
-                  ),
+                      ),
+                    ).animateOnPageLoad(
+                        animationsMap['containerOnPageLoadAnimation']!),
+                  ],
                 ),
                 Padding(
                   padding:
@@ -172,7 +247,8 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget> {
                     keyboardType: TextInputType.emailAddress,
                     validator: _model.antiguaContrasenaControllerValidator
                         .asValidator(context),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['textFieldOnPageLoadAnimation1']!),
                 ),
                 Padding(
                   padding:
@@ -239,7 +315,8 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget> {
                     keyboardType: TextInputType.emailAddress,
                     validator: _model.nuevaContrasenaControllerValidator
                         .asValidator(context),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['textFieldOnPageLoadAnimation2']!),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
@@ -324,7 +401,8 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget> {
                         width: 1.0,
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['buttonOnPageLoadAnimation']!),
                 ),
               ],
             ),

@@ -5,27 +5,30 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'listado_usuarios_model.dart';
-export 'listado_usuarios_model.dart';
+import 'listado_usuarios_prueba_model.dart';
+export 'listado_usuarios_prueba_model.dart';
 
-class ListadoUsuariosWidget extends StatefulWidget {
-  const ListadoUsuariosWidget({Key? key}) : super(key: key);
+class ListadoUsuariosPruebaWidget extends StatefulWidget {
+  const ListadoUsuariosPruebaWidget({Key? key}) : super(key: key);
 
   @override
-  _ListadoUsuariosWidgetState createState() => _ListadoUsuariosWidgetState();
+  _ListadoUsuariosPruebaWidgetState createState() =>
+      _ListadoUsuariosPruebaWidgetState();
 }
 
-class _ListadoUsuariosWidgetState extends State<ListadoUsuariosWidget> {
-  late ListadoUsuariosModel _model;
+class _ListadoUsuariosPruebaWidgetState
+    extends State<ListadoUsuariosPruebaWidget> {
+  late ListadoUsuariosPruebaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ListadoUsuariosModel());
+    _model = createModel(context, () => ListadoUsuariosPruebaModel());
 
     _model.textController ??= TextEditingController();
   }
@@ -174,10 +177,9 @@ class _ListadoUsuariosWidgetState extends State<ListadoUsuariosWidget> {
                           child: SizedBox(
                             width: 50.0,
                             height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
-                              ),
+                            child: SpinKitThreeBounce(
+                              color: FlutterFlowTheme.of(context).primary,
+                              size: 50.0,
                             ),
                           ),
                         );

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'perfil_admin_pruebas_model.dart';
@@ -298,7 +299,7 @@ class _PerfilAdminPruebasWidgetState extends State<PerfilAdminPruebasWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      context.pushNamed('listadoUsuarios');
+                      context.pushNamed('listadoUsuariosPrueba');
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,

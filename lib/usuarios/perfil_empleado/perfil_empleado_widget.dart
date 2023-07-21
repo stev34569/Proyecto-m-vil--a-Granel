@@ -1,12 +1,16 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +24,26 @@ class PerfilEmpleadoWidget extends StatefulWidget {
   _PerfilEmpleadoWidgetState createState() => _PerfilEmpleadoWidgetState();
 }
 
-class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget> {
+class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
+    with TickerProviderStateMixin {
   late PerfilEmpleadoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'rowOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -248,7 +268,8 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget> {
                                       ),
                                     ),
                                   ],
-                                ),
+                                ).animateOnPageLoad(
+                                    animationsMap['rowOnPageLoadAnimation']!),
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,

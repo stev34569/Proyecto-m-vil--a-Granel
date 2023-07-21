@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'actualizar_usuario_model.dart';
@@ -65,7 +66,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 60.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
-        height: 350.0,
+        height: 360.0,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

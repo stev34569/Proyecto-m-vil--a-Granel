@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
@@ -106,9 +108,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => PerfilAdministradorWidget(),
         ),
         FFRoute(
-          name: 'listadoUsuarios',
-          path: '/listadoUsuarios',
-          builder: (context, params) => ListadoUsuariosWidget(),
+          name: 'listadoUsuariosPrueba',
+          path: '/listadoUsuariosPrueba',
+          builder: (context, params) => ListadoUsuariosPruebaWidget(),
         ),
         FFRoute(
           name: 'perfilEmpleadoPrueba',
@@ -138,12 +140,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Producto',
           path: '/producto',
-          builder: (context, params) => ProductoWidget(),
+          asyncParams: {
+            'categoria': getDoc(['Categoria'], CategoriaRecord.fromSnapshot),
+          },
+          builder: (context, params) => ProductoWidget(
+            categoria: params.getParam('categoria', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'registrarProducto',
           path: '/registrarProducto',
-          builder: (context, params) => RegistrarProductoWidget(),
+          asyncParams: {
+            'pregistrarProducto':
+                getDoc(['Categoria'], CategoriaRecord.fromSnapshot),
+          },
+          builder: (context, params) => RegistrarProductoWidget(
+            pregistrarProducto:
+                params.getParam('pregistrarProducto', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'cambiarContrasena',
@@ -159,6 +173,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'perfilEmpleado',
           path: '/perfilEmpleado',
           builder: (context, params) => PerfilEmpleadoWidget(),
+        ),
+        FFRoute(
+          name: 'listaUsuariosCopy',
+          path: '/listaUsuariosCopy',
+          builder: (context, params) => ListaUsuariosCopyWidget(),
+        ),
+        FFRoute(
+          name: 'chats',
+          path: '/chats',
+          builder: (context, params) => ChatsWidget(),
+        ),
+        FFRoute(
+          name: 'actividadUsuarios',
+          path: '/actividadUsuarios',
+          builder: (context, params) => ActividadUsuariosWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -342,10 +371,9 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+                    child: SpinKitThreeBounce(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 50.0,
                     ),
                   ),
                 )

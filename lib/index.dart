@@ -5,8 +5,8 @@ export '/login/recuperar_contrasena/recuperar_contrasena_widget.dart'
     show RecuperarContrasenaWidget;
 export '/usuarios/perfil_administrador/perfil_administrador_widget.dart'
     show PerfilAdministradorWidget;
-export '/pruebas/listado_usuarios/listado_usuarios_widget.dart'
-    show ListadoUsuariosWidget;
+export '/pruebas/listado_usuarios_prueba/listado_usuarios_prueba_widget.dart'
+    show ListadoUsuariosPruebaWidget;
 export '/pruebas/perfil_empleado_prueba/perfil_empleado_prueba_widget.dart'
     show PerfilEmpleadoPruebaWidget;
 export '/usuarios/registrar_empleado/registrar_empleado_widget.dart'
@@ -26,3 +26,8 @@ export '/usuarios/lista_usuarios/lista_usuarios_widget.dart'
     show ListaUsuariosWidget;
 export '/usuarios/perfil_empleado/perfil_empleado_widget.dart'
     show PerfilEmpleadoWidget;
+export '/pruebas/lista_usuarios_copy/lista_usuarios_copy_widget.dart'
+    show ListaUsuariosCopyWidget;
+export '/mensajes/chats/chats_widget.dart' show ChatsWidget;
+export '/mensajes/actividad_usuarios/actividad_usuarios_widget.dart'
+    show ActividadUsuariosWidget;
