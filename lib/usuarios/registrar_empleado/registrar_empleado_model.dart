@@ -14,38 +14,125 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for registrarCorreo widget.
-  TextEditingController? registrarCorreoController;
-  String? Function(BuildContext, String?)? registrarCorreoControllerValidator;
+  final formKey = GlobalKey<FormState>();
   // State field(s) for registrarNombre widget.
   TextEditingController? registrarNombreController;
   String? Function(BuildContext, String?)? registrarNombreControllerValidator;
+  String? _registrarNombreControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'El nombre completo es requerido';
+    }
+
+    if (val.length < 10) {
+      return 'Se requiere un mínimo de 10 caracteres';
+    }
+    if (val.length > 40) {
+      return 'Has alcanzado el máximo de caracteres';
+    }
+
+    return null;
+  }
+
   // State field(s) for registrarNumero widget.
   TextEditingController? registrarNumeroController;
   String? Function(BuildContext, String?)? registrarNumeroControllerValidator;
+  String? _registrarNumeroControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'El número de telefono es requerido';
+    }
+
+    if (val.length < 8) {
+      return 'Ingrese como mínimo 8 dígitos';
+    }
+    if (val.length > 9) {
+      return 'Has alcanzado el máximo de digitos';
+    }
+
+    return null;
+  }
+
   // State field(s) for registrarCedula widget.
   TextEditingController? registrarCedulaController;
   String? Function(BuildContext, String?)? registrarCedulaControllerValidator;
+  String? _registrarCedulaControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'La cédula es requerida';
+    }
+
+    if (val.length < 15) {
+      return 'Debe tener almenos 15 digitos';
+    }
+    if (val.length > 60) {
+      return 'Has alcanzado el máximo de digitos';
+    }
+
+    return null;
+  }
+
+  // State field(s) for registrarCorreo widget.
+  TextEditingController? registrarCorreoController;
+  String? Function(BuildContext, String?)? registrarCorreoControllerValidator;
+  String? _registrarCorreoControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'El correo es requerido';
+    }
+
+    if (val.length < 15) {
+      return 'Debe tener almenos 15 caracteres';
+    }
+    if (val.length > 60) {
+      return 'Has alcanzado el máximo de caracteres';
+    }
+
+    return null;
+  }
+
   // State field(s) for registrarCotrasena widget.
   TextEditingController? registrarCotrasenaController;
   late bool registrarCotrasenaVisibility;
   String? Function(BuildContext, String?)?
       registrarCotrasenaControllerValidator;
+  String? _registrarCotrasenaControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'La contraseña es requerida';
+    }
+
+    if (val.length < 6) {
+      return 'Se requiere un mínimo de 6 caracteres';
+    }
+    if (val.length > 60) {
+      return 'Has alcanzado el máximo de caracteres';
+    }
+
+    return null;
+  }
+
   // State field(s) for checkEmpleado widget.
   bool? checkEmpleadoValue;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
+    registrarNombreControllerValidator = _registrarNombreControllerValidator;
+    registrarNumeroControllerValidator = _registrarNumeroControllerValidator;
+    registrarCedulaControllerValidator = _registrarCedulaControllerValidator;
+    registrarCorreoControllerValidator = _registrarCorreoControllerValidator;
     registrarCotrasenaVisibility = false;
+    registrarCotrasenaControllerValidator =
+        _registrarCotrasenaControllerValidator;
   }
 
   void dispose() {
     unfocusNode.dispose();
-    registrarCorreoController?.dispose();
     registrarNombreController?.dispose();
     registrarNumeroController?.dispose();
     registrarCedulaController?.dispose();
+    registrarCorreoController?.dispose();
     registrarCotrasenaController?.dispose();
   }
 

@@ -41,12 +41,18 @@ class ProductosRecord extends FirestoreRecord {
   PesoStruct get peso => _peso ?? PesoStruct();
   bool hasPeso() => _peso != null;
 
+  // "cantidad" field.
+  int? _cantidad;
+  int get cantidad => _cantidad ?? 0;
+  bool hasCantidad() => _cantidad != null;
+
   void _initializeFields() {
     _nombre = snapshotData['nombre'] as String?;
     _imagen = snapshotData['imagen'] as String?;
     _disponibilidad = snapshotData['disponibilidad'] as bool?;
     _categoria = snapshotData['categoria'] as DocumentReference?;
     _peso = PesoStruct.maybeFromMap(snapshotData['peso']);
+    _cantidad = castToType<int>(snapshotData['cantidad']);
   }
 
   static CollectionReference get collection =>
@@ -89,6 +95,7 @@ Map<String, dynamic> createProductosRecordData({
   bool? disponibilidad,
   DocumentReference? categoria,
   PesoStruct? peso,
+  int? cantidad,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -97,6 +104,7 @@ Map<String, dynamic> createProductosRecordData({
       'disponibilidad': disponibilidad,
       'categoria': categoria,
       'peso': PesoStruct().toMap(),
+      'cantidad': cantidad,
     }.withoutNulls,
   );
 
@@ -115,12 +123,19 @@ class ProductosRecordDocumentEquality implements Equality<ProductosRecord> {
         e1?.imagen == e2?.imagen &&
         e1?.disponibilidad == e2?.disponibilidad &&
         e1?.categoria == e2?.categoria &&
-        e1?.peso == e2?.peso;
+        e1?.peso == e2?.peso &&
+        e1?.cantidad == e2?.cantidad;
   }
 
   @override
-  int hash(ProductosRecord? e) => const ListEquality()
-      .hash([e?.nombre, e?.imagen, e?.disponibilidad, e?.categoria, e?.peso]);
+  int hash(ProductosRecord? e) => const ListEquality().hash([
+        e?.nombre,
+        e?.imagen,
+        e?.disponibilidad,
+        e?.categoria,
+        e?.peso,
+        e?.cantidad
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is ProductosRecord;

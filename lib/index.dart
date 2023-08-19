@@ -11,10 +11,6 @@ export '/pruebas/perfil_empleado_prueba/perfil_empleado_prueba_widget.dart'
     show PerfilEmpleadoPruebaWidget;
 export '/usuarios/registrar_empleado/registrar_empleado_widget.dart'
     show RegistrarEmpleadoWidget;
-export '/pruebas/perfil_admin_pruebas/perfil_admin_pruebas_widget.dart'
-    show PerfilAdminPruebasWidget;
-export '/pruebas/lista_usuarios_uno/lista_usuarios_uno_widget.dart'
-    show ListaUsuariosUnoWidget;
 export '/registrar_producto/categoria/categoria_widget.dart'
     show CategoriaWidget;
 export '/registrar_producto/producto/producto_widget.dart' show ProductoWidget;
@@ -31,3 +27,5 @@ export '/pruebas/lista_usuarios_copy/lista_usuarios_copy_widget.dart'
 export '/mensajes/chats/chats_widget.dart' show ChatsWidget;
 export '/mensajes/actividad_usuarios/actividad_usuarios_widget.dart'
     show ActividadUsuariosWidget;
+export '/pruebas/cambiar_contrasena_copy/cambiar_contrasena_copy_widget.dart'
+    show CambiarContrasenaCopyWidget;

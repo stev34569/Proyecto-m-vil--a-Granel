@@ -16,11 +16,6 @@ class ChatsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "users" field.
-  List<DocumentReference>? _users;
-  List<DocumentReference> get users => _users ?? const [];
-  bool hasUsers() => _users != null;
-
   // "user_a" field.
   DocumentReference? _userA;
   DocumentReference? get userA => _userA;
@@ -52,8 +47,12 @@ class ChatsRecord extends FirestoreRecord {
       _lastMessageSeenBy ?? const [];
   bool hasLastMessageSeenBy() => _lastMessageSeenBy != null;
 
+  // "user" field.
+  DocumentReference? _user;
+  DocumentReference? get user => _user;
+  bool hasUser() => _user != null;
+
   void _initializeFields() {
-    _users = getDataList(snapshotData['users']);
     _userA = snapshotData['user_a'] as DocumentReference?;
     _userB = snapshotData['user_b'] as DocumentReference?;
     _lastMessage = snapshotData['last_message'] as String?;
@@ -61,6 +60,7 @@ class ChatsRecord extends FirestoreRecord {
     _lastMessageSentBy =
         snapshotData['last_message_sent_by'] as DocumentReference?;
     _lastMessageSeenBy = getDataList(snapshotData['last_message_seen_by']);
+    _user = snapshotData['user'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -102,6 +102,7 @@ Map<String, dynamic> createChatsRecordData({
   String? lastMessage,
   DateTime? lastMessageTime,
   DocumentReference? lastMessageSentBy,
+  DocumentReference? user,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -110,6 +111,7 @@ Map<String, dynamic> createChatsRecordData({
       'last_message': lastMessage,
       'last_message_time': lastMessageTime,
       'last_message_sent_by': lastMessageSentBy,
+      'user': user,
     }.withoutNulls,
   );
 
@@ -122,24 +124,24 @@ class ChatsRecordDocumentEquality implements Equality<ChatsRecord> {
   @override
   bool equals(ChatsRecord? e1, ChatsRecord? e2) {
     const listEquality = ListEquality();
-    return listEquality.equals(e1?.users, e2?.users) &&
-        e1?.userA == e2?.userA &&
+    return e1?.userA == e2?.userA &&
         e1?.userB == e2?.userB &&
         e1?.lastMessage == e2?.lastMessage &&
         e1?.lastMessageTime == e2?.lastMessageTime &&
         e1?.lastMessageSentBy == e2?.lastMessageSentBy &&
-        listEquality.equals(e1?.lastMessageSeenBy, e2?.lastMessageSeenBy);
+        listEquality.equals(e1?.lastMessageSeenBy, e2?.lastMessageSeenBy) &&
+        e1?.user == e2?.user;
   }
 
   @override
   int hash(ChatsRecord? e) => const ListEquality().hash([
-        e?.users,
         e?.userA,
         e?.userB,
         e?.lastMessage,
         e?.lastMessageTime,
         e?.lastMessageSentBy,
-        e?.lastMessageSeenBy
+        e?.lastMessageSeenBy,
+        e?.user
       ]);
 
   @override

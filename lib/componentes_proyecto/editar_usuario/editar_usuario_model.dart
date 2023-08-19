@@ -9,7 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ActualizarUsuarioModel extends FlutterFlowModel {
+class EditarUsuarioModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for txtNombreUsuario widget.
@@ -22,11 +22,6 @@ class ActualizarUsuarioModel extends FlutterFlowModel {
   TextEditingController? txtTelefonoUsuarioController;
   String? Function(BuildContext, String?)?
       txtTelefonoUsuarioControllerValidator;
-  // State field(s) for txtCedula widget.
-  TextEditingController? txtCedulaController;
-  String? Function(BuildContext, String?)? txtCedulaControllerValidator;
-  // State field(s) for CheckboxA widget.
-  bool? checkboxAValue;
 
   /// Initialization and disposal methods.
 
@@ -36,7 +31,6 @@ class ActualizarUsuarioModel extends FlutterFlowModel {
     txtNombreUsuarioController?.dispose();
     txtEmailUsuarioController?.dispose();
     txtTelefonoUsuarioController?.dispose();
-    txtCedulaController?.dispose();
   }
 
   /// Action blocks are added here.

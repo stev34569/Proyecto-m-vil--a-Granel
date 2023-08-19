@@ -15,7 +15,16 @@ import '/auth/firebase_auth/auth_util.dart';
 
 String? prueba(bool pDisponibilidad) {
   if (pDisponibilidad == true) {
-    return "Si";
+    return "si";
   }
-  return "No";
+  return "Agotado";
+}
+
+String generarIdChat(
+  String idMia,
+  String idDelOtro,
+) {
+  List<String> arrayOfIds = [idMia, idDelOtro];
+  arrayOfIds.sort();
+  return arrayOfIds[0] + "-" + arrayOfIds[1];
 }

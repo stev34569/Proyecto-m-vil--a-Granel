@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/componentes_proyecto/editar_usuario/editar_usuario_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -270,7 +271,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                               child: Image.network(
                                                 valueOrDefault<String>(
                                                   currentUserPhoto,
-                                                  'Agregar imagen',
+                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
                                                 ),
                                                 width: double.infinity,
                                                 height: double.infinity,
@@ -705,7 +706,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                                     .fromSTEB(
                                                         10.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  'Log out',
+                                                  'Cerrar sesión',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -752,9 +753,26 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                               0.0, 15.0, 0.0, 15.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('registrarEmpleado');
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => FocusScope.of(context)
+                                        .requestFocus(_model.unfocusNode),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: EditarUsuarioWidget(
+                                        perfilUsuario: currentUserReference!.id,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
                             },
-                            text: 'Agregar empleado',
+                            text: 'Editar información',
                             options: FFButtonOptions(
                               height: 47.0,
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -779,12 +797,40 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                             ),
                           ),
                         ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed('registrarEmpleado');
+                          },
+                          text: 'Agregar empleado',
+                          options: FFButtonOptions(
+                            height: 47.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).customColor5,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 20.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 25.0),
+                              0.0, 15.0, 0.0, 15.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('listaUsuariosUno');
+                              context.pushNamed('listaUsuarios');
                             },
                             text: 'Lista de empleados',
                             options: FFButtonOptions(

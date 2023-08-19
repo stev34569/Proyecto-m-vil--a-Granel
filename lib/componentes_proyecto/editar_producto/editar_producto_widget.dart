@@ -1,31 +1,32 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'actualizar_usuario_model.dart';
-export 'actualizar_usuario_model.dart';
+import 'editar_producto_model.dart';
+export 'editar_producto_model.dart';
 
-class ActualizarUsuarioWidget extends StatefulWidget {
-  const ActualizarUsuarioWidget({
+class EditarProductoWidget extends StatefulWidget {
+  const EditarProductoWidget({
     Key? key,
-    required this.usuarioSeleccionado,
+    required this.productos,
   }) : super(key: key);
 
-  final UsersRecord? usuarioSeleccionado;
+  final ProductosRecord? productos;
 
   @override
-  _ActualizarUsuarioWidgetState createState() =>
-      _ActualizarUsuarioWidgetState();
+  _EditarProductoWidgetState createState() => _EditarProductoWidgetState();
 }
 
-class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
-  late ActualizarUsuarioModel _model;
+class _EditarProductoWidgetState extends State<EditarProductoWidget> {
+  late EditarProductoModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -36,19 +37,14 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ActualizarUsuarioModel());
+    _model = createModel(context, () => EditarProductoModel());
 
-    _model.txtNombreUsuarioController ??=
-        TextEditingController(text: widget.usuarioSeleccionado?.displayName);
-    _model.txtEmailUsuarioController ??=
-        TextEditingController(text: widget.usuarioSeleccionado?.email);
+    _model.txtNombreController ??=
+        TextEditingController(text: widget.productos?.nombre);
+    _model.txtCantidadController ??=
+        TextEditingController(text: widget.productos?.cantidad?.toString());
     _model.txtTelefonoUsuarioController ??=
-        TextEditingController(text: widget.usuarioSeleccionado?.phoneNumber);
-    _model.txtCedulaController ??= TextEditingController(
-        text: valueOrDefault<String>(
-      widget.usuarioSeleccionado?.cedula?.toString(),
-      '1',
-    ));
+        TextEditingController(text: widget.productos?.peso?.peso);
   }
 
   @override
@@ -63,10 +59,10 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 60.0),
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 80.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
-        height: 360.0,
+        height: 754.0,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -81,13 +77,14 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Divider(
@@ -104,7 +101,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 16.0, 0.0),
                                 child: Text(
-                                  'Editando usuario',
+                                  'Editando producto',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineMedium
@@ -114,6 +111,122 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                         fontSize: 24.0,
                                         fontWeight: FontWeight.normal,
                                       ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  valueOrDefault<String>(
+                                    widget.productos?.imagen,
+                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
+                                  ),
+                                  width: MediaQuery.sizeOf(context).width * 0.3,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.1,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 15.0, 0.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  final selectedMedia =
+                                      await selectMediaWithSourceBottomSheet(
+                                    context: context,
+                                    allowPhoto: true,
+                                  );
+                                  if (selectedMedia != null &&
+                                      selectedMedia.every((m) =>
+                                          validateFileFormat(
+                                              m.storagePath, context))) {
+                                    setState(
+                                        () => _model.isDataUploading = true);
+                                    var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      selectedUploadedFiles = selectedMedia
+                                          .map((m) => FFUploadedFile(
+                                                name: m.storagePath
+                                                    .split('/')
+                                                    .last,
+                                                bytes: m.bytes,
+                                                height: m.dimensions?.height,
+                                                width: m.dimensions?.width,
+                                                blurHash: m.blurHash,
+                                              ))
+                                          .toList();
+
+                                      downloadUrls = (await Future.wait(
+                                        selectedMedia.map(
+                                          (m) async => await uploadData(
+                                              m.storagePath, m.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      _model.isDataUploading = false;
+                                    }
+                                    if (selectedUploadedFiles.length ==
+                                            selectedMedia.length &&
+                                        downloadUrls.length ==
+                                            selectedMedia.length) {
+                                      setState(() {
+                                        _model.uploadedLocalFile =
+                                            selectedUploadedFiles.first;
+                                        _model.uploadedFileUrl =
+                                            downloadUrls.first;
+                                      });
+                                    } else {
+                                      setState(() {});
+                                      return;
+                                    }
+                                  }
+
+                                  await widget.productos!.reference
+                                      .update(createProductosRecordData(
+                                    imagen: _model.uploadedFileUrl,
+                                  ));
+                                },
+                                text: 'Upload Image',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 24.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: Color(0xFFF1F4F8),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: Color(0xFF57636C),
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
                             ),
@@ -131,8 +244,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
-                                    controller:
-                                        _model.txtNombreUsuarioController,
+                                    controller: _model.txtNombreController,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -180,7 +292,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     validator: _model
-                                        .txtNombreUsuarioControllerValidator
+                                        .txtNombreControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -200,12 +312,11 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
-                                    controller:
-                                        _model.txtEmailUsuarioController,
+                                    controller: _model.txtCantidadController,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Email',
+                                      labelText: 'Cantidad',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       hintStyle: FlutterFlowTheme.of(context)
@@ -246,7 +357,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     validator: _model
-                                        .txtEmailUsuarioControllerValidator
+                                        .txtCantidadControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -271,7 +382,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Telefono',
+                                      labelText: 'Peso',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       hintStyle: FlutterFlowTheme.of(context)
@@ -323,122 +434,43 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 8.0, 0.0),
-                                  child: TextFormField(
-                                    controller: _model.txtCedulaController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Cedula',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFF39D2C0),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    validator: _model
-                                        .txtCedulaControllerValidator
-                                        .asValidator(context),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 8.0, 0.0),
+                              child: Text(
+                                'Disponibilidad',
+                                style: FlutterFlowTheme.of(context).bodyMedium,
+                              ),
+                            ),
+                            Theme(
+                              data: ThemeData(
+                                checkboxTheme: CheckboxThemeData(
+                                  visualDensity: VisualDensity.compact,
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
                                   ),
                                 ),
+                                unselectedWidgetColor:
+                                    FlutterFlowTheme.of(context).secondaryText,
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Administrador',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 15.0,
-                                      ),
-                                ),
+                              child: Checkbox(
+                                value: _model.checkboxValue ??= true,
+                                onChanged: (newValue) async {
+                                  setState(
+                                      () => _model.checkboxValue = newValue!);
+                                },
+                                activeColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                checkColor: FlutterFlowTheme.of(context).info,
                               ),
-                              Theme(
-                                data: ThemeData(
-                                  checkboxTheme: CheckboxThemeData(
-                                    visualDensity: VisualDensity.compact,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                  ),
-                                  unselectedWidgetColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                ),
-                                child: Checkbox(
-                                  value: _model.checkboxAValue ??=
-                                      widget.usuarioSeleccionado!.administrador,
-                                  onChanged: (newValue) async {
-                                    setState(() =>
-                                        _model.checkboxAValue = newValue!);
-                                  },
-                                  activeColor: Color(0xFF39D2C0),
-                                  checkColor: FlutterFlowTheme.of(context).info,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -477,23 +509,21 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                               ),
                               FFButtonWidget(
                                 onPressed: () async {
-                                  await widget.usuarioSeleccionado!.reference
-                                      .update(createUsersRecordData(
-                                    displayName:
-                                        _model.txtNombreUsuarioController.text,
-                                    email:
-                                        _model.txtEmailUsuarioController.text,
-                                    empleado: !_model.checkboxAValue!,
-                                    phoneNumber: _model
-                                        .txtTelefonoUsuarioController.text,
-                                    cedula: int.tryParse(
-                                        _model.txtCedulaController.text),
-                                    administrador: _model.checkboxAValue,
+                                  await widget.productos!.reference
+                                      .update(createProductosRecordData(
+                                    nombre: _model.txtNombreController.text,
+                                    disponibilidad: _model.checkboxValue,
+                                    peso: updatePesoStruct(
+                                      widget.productos?.peso,
+                                      clearUnsetFields: false,
+                                    ),
+                                    cantidad: int.tryParse(
+                                        _model.txtCantidadController.text),
                                   ));
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        'Usuario editado con éxito',
+                                        'Perfil editado con éxito',
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryBtnText,
@@ -505,6 +535,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                               .secondary,
                                     ),
                                   );
+                                  Navigator.pop(context);
                                 },
                                 text: 'Actualizar',
                                 options: FFButtonOptions(

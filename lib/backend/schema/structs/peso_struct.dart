@@ -9,20 +9,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class PesoStruct extends FFFirebaseStruct {
   PesoStruct({
-    double? peso,
+    String? peso,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _peso = peso,
         super(firestoreUtilData);
 
   // "peso" field.
-  double? _peso;
-  double get peso => _peso ?? 0.0;
-  set peso(double? val) => _peso = val;
-  void incrementPeso(double amount) => _peso = peso + amount;
+  String? _peso;
+  String get peso => _peso ?? '';
+  set peso(String? val) => _peso = val;
   bool hasPeso() => _peso != null;
 
   static PesoStruct fromMap(Map<String, dynamic> data) => PesoStruct(
-        peso: castToType<double>(data['peso']),
+        peso: data['peso'] as String?,
       );
 
   static PesoStruct? maybeFromMap(dynamic data) =>
@@ -36,7 +35,7 @@ class PesoStruct extends FFFirebaseStruct {
   Map<String, dynamic> toSerializableMap() => {
         'peso': serializeParam(
           _peso,
-          ParamType.double,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -44,7 +43,7 @@ class PesoStruct extends FFFirebaseStruct {
       PesoStruct(
         peso: deserializeParam(
           data['peso'],
-          ParamType.double,
+          ParamType.String,
           false,
         ),
       );
@@ -62,7 +61,7 @@ class PesoStruct extends FFFirebaseStruct {
 }
 
 PesoStruct createPesoStruct({
-  double? peso,
+  String? peso,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -103,14 +102,17 @@ void addPesoStructData(
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
-  if (!forFieldValue && pesoStruct.firestoreUtilData.clearUnsetFields) {
+  final clearFields =
+      !forFieldValue && pesoStruct.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
   final pesoStructData = getPesoFirestoreData(pesoStruct, forFieldValue);
   final nestedData = pesoStructData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final create = pesoStruct.firestoreUtilData.create;
-  firestoreData.addAll(create ? mergeNestedFields(nestedData) : nestedData);
+  final mergeFields = pesoStruct.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getPesoFirestoreData(

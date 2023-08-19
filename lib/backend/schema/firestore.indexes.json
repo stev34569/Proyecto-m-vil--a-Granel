@@ -1,3 +1,18 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "chatRoom",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "idConversacion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
 }

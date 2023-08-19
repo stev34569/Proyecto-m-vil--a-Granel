@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/componentes_proyecto/actualizar_usuario/actualizar_usuario_widget.dart';
+import '/componentes_proyecto/eliminar_usuario/eliminar_usuario_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -128,7 +129,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                 size: 30.0,
               ),
               onPressed: () async {
-                context.pop();
+                context.pushNamed('home');
               },
             ),
             title: Text(
@@ -186,7 +187,10 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                 builder: (context) => ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.network(
-                                    currentUserPhoto,
+                                    valueOrDefault<String>(
+                                      currentUserPhoto,
+                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
+                                    ),
                                     width: 80.0,
                                     height: 80.0,
                                     fit: BoxFit.cover,
@@ -226,7 +230,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              fontSize: 20.0,
+                                              fontSize: 25.0,
                                             ),
                                       ),
                                     ),
@@ -418,7 +422,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                           height: 280.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .customColor3,
+                                                .primaryBtnText,
                                             boxShadow: [
                                               BoxShadow(
                                                 blurRadius: 5.0,
@@ -467,8 +471,12 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                         8.0),
                                                             child:
                                                                 Image.network(
-                                                              listanombres2Item
-                                                                  .photoUrl,
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                listanombres2Item
+                                                                    .photoUrl,
+                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
+                                                              ),
                                                               width: MediaQuery
                                                                           .sizeOf(
                                                                               context)
@@ -711,7 +719,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                           fillColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .customColor6,
+                                                                  .customColor2,
                                                           icon: Icon(
                                                             Icons.update,
                                                             color: FlutterFlowTheme
@@ -773,7 +781,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                           fillColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .customColor6,
+                                                                  .error,
                                                           icon: Icon(
                                                             Icons.delete_sharp,
                                                             color: FlutterFlowTheme
@@ -782,34 +790,35 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                             size: 25.0,
                                                           ),
                                                           onPressed: () async {
-                                                            await listanombres2Item
-                                                                .reference
-                                                                .delete();
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                  'El usuario se ha eliminado correctamente',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBtnText,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              enableDrag: false,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      EliminarUsuarioWidget(
+                                                                    imagen: listanombres2Item
+                                                                        .photoUrl,
+                                                                    usuarios:
+                                                                        listanombres2Item
+                                                                            .reference,
+                                                                    nombre: listanombres2Item
+                                                                        .displayName,
                                                                   ),
-                                                                ),
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
-                                                                backgroundColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .customColor5,
-                                                              ),
-                                                            );
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
                                                           },
                                                         ),
                                                       ),
@@ -886,7 +895,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                           height: 280.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .customColor3,
+                                                .primaryBtnText,
                                             boxShadow: [
                                               BoxShadow(
                                                 blurRadius: 5.0,
@@ -1125,7 +1134,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                     5.0,
                                                                     0.0,
                                                                     0.0,
-                                                                    5.0),
+                                                                    0.0),
                                                         child: Text(
                                                           valueOrDefault<
                                                               String>(
@@ -1179,7 +1188,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                           fillColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .customColor6,
+                                                                  .customColor2,
                                                           icon: Icon(
                                                             Icons.update,
                                                             color: FlutterFlowTheme
@@ -1241,7 +1250,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                           fillColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .customColor6,
+                                                                  .error,
                                                           icon: Icon(
                                                             Icons.delete_sharp,
                                                             color: FlutterFlowTheme
@@ -1250,9 +1259,35 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                             size: 25.0,
                                                           ),
                                                           onPressed: () async {
-                                                            await listanombresItem
-                                                                .reference
-                                                                .delete();
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              enableDrag: false,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      EliminarUsuarioWidget(
+                                                                    imagen: listanombresItem
+                                                                        .photoUrl,
+                                                                    usuarios:
+                                                                        listanombresItem
+                                                                            .reference,
+                                                                    nombre: listanombresItem
+                                                                        .displayName,
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
                                                           },
                                                         ),
                                                       ),

@@ -1,29 +1,30 @@
-import '/componentes_proyecto/confirmar_cambio/confirmar_cambio_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'cambiar_contrasena_model.dart';
-export 'cambiar_contrasena_model.dart';
+import 'cambiar_contrasena_copy_model.dart';
+export 'cambiar_contrasena_copy_model.dart';
 
-class CambiarContrasenaWidget extends StatefulWidget {
-  const CambiarContrasenaWidget({Key? key}) : super(key: key);
+class CambiarContrasenaCopyWidget extends StatefulWidget {
+  const CambiarContrasenaCopyWidget({Key? key}) : super(key: key);
 
   @override
-  _CambiarContrasenaWidgetState createState() =>
-      _CambiarContrasenaWidgetState();
+  _CambiarContrasenaCopyWidgetState createState() =>
+      _CambiarContrasenaCopyWidgetState();
 }
 
-class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
-    with TickerProviderStateMixin {
-  late CambiarContrasenaModel _model;
+class _CambiarContrasenaCopyWidgetState
+    extends State<CambiarContrasenaCopyWidget> with TickerProviderStateMixin {
+  late CambiarContrasenaCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -81,7 +82,7 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CambiarContrasenaModel());
+    _model = createModel(context, () => CambiarContrasenaCopyModel());
 
     _model.antiguaContrasenaController ??= TextEditingController();
     _model.nuevaContrasenaController ??= TextEditingController();
@@ -347,27 +348,62 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) {
-                          return GestureDetector(
-                            onTap: () => FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode),
-                            child: Padding(
-                              padding: MediaQuery.viewInsetsOf(context),
-                              child: ConfirmarCambioWidget(
-                                antiguaContrasena:
-                                    _model.antiguaContrasenaController.text,
-                                nuevaContrasena:
-                                    _model.nuevaContrasenaController.text,
+                      Function() _navigate = () {};
+                      _model.isChange = await actions.cambiarContrasena(
+                        context,
+                        _model.antiguaContrasenaController.text,
+                        _model.nuevaContrasenaController.text,
+                      );
+                      if (_model.isChange!) {
+                        GoRouter.of(context).prepareAuthEvent();
+                        await authManager.signOut();
+                        GoRouter.of(context).clearRedirectLocation();
+
+                        _navigate =
+                            () => context.goNamedAuth('login', context.mounted);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'La contraseña se actualizó correctamente',
+                              style: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 22.0,
                               ),
                             ),
-                          );
-                        },
-                      ).then((value) => setState(() {}));
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).customColor5,
+                          ),
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Contraseña incorrecta'),
+                              content: Text(
+                                  'La contraseña ingresada es incorrecta o está vacía'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        setState(() {
+                          _model.antiguaContrasenaController?.clear();
+                          _model.nuevaContrasenaController?.clear();
+                        });
+                      }
+
+                      _navigate();
+
+                      setState(() {});
                     },
                     text: 'Cambiar contraseña',
                     options: FFButtonOptions(
@@ -377,7 +413,7 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFF1598C3),
+                      color: FlutterFlowTheme.of(context).customColor4,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Lexend Deca',

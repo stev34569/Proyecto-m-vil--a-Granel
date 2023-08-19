@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
-import '../flutter_flow_theme.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
-import '../../index.dart';
-import '../../main.dart';
-import '../lat_lng.dart';
-import '../place.dart';
+import '/index.dart';
+import '/main.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -123,16 +124,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RegistrarEmpleadoWidget(),
         ),
         FFRoute(
-          name: 'perfilAdminPruebas',
-          path: '/perfilAdminPruebas',
-          builder: (context, params) => PerfilAdminPruebasWidget(),
-        ),
-        FFRoute(
-          name: 'listaUsuariosUno',
-          path: '/listaUsuariosUno',
-          builder: (context, params) => ListaUsuariosUnoWidget(),
-        ),
-        FFRoute(
           name: 'Categoria',
           path: '/categoria',
           builder: (context, params) => CategoriaWidget(),
@@ -187,7 +178,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'actividadUsuarios',
           path: '/actividadUsuarios',
-          builder: (context, params) => ActividadUsuariosWidget(),
+          builder: (context, params) => ActividadUsuariosWidget(
+            idOtro: params.getParam('idOtro', ParamType.String),
+            foto: params.getParam('foto', ParamType.String),
+            name: params.getParam('name', ParamType.String),
+            email: params.getParam('email', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'cambiarContrasenaCopy',
+          path: '/cambiarContrasenaCopy',
+          builder: (context, params) => CambiarContrasenaCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
