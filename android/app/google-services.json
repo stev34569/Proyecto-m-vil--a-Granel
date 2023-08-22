@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "997830302695-p3m726ot2thbn5bumrd1f2kfpue65302.apps.googleusercontent.com",
+          "client_id": "997830302695-ik7st1kk455l1mfrsdqip9k58ap8ds1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.proyectogranel",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "997830302695-hdh9qjeur96v7ut5b7i16krj6oc0od8l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "997830302695-p3m726ot2thbn5bumrd1f2kfpue65302.apps.googleusercontent.com",
+              "client_id": "997830302695-hdh9qjeur96v7ut5b7i16krj6oc0od8l.apps.googleusercontent.com",
               "client_type": 3
             },
             {

@@ -43,8 +43,13 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
         TextEditingController(text: widget.productos?.nombre);
     _model.txtCantidadController ??=
         TextEditingController(text: widget.productos?.cantidad?.toString());
-    _model.txtTelefonoUsuarioController ??=
-        TextEditingController(text: widget.productos?.peso?.peso);
+    _model.txtPrecioController ??=
+        TextEditingController(text: widget.productos?.precio?.toString());
+    _model.txtPesoController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.productos?.peso?.peso,
+      '0',
+    ));
   }
 
   @override
@@ -377,8 +382,72 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
-                                    controller:
-                                        _model.txtTelefonoUsuarioController,
+                                    controller: _model.txtPrecioController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Precio',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium,
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium,
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF39D2C0),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFF39D2C0),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE5092F),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFE5092F),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    validator: _model
+                                        .txtPrecioControllerValidator
+                                        .asValidator(context),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8.0, 0.0, 8.0, 0.0),
+                                  child: TextFormField(
+                                    controller: _model.txtPesoController,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -425,8 +494,7 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
-                                    validator: _model
-                                        .txtTelefonoUsuarioControllerValidator
+                                    validator: _model.txtPesoControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -513,20 +581,24 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                       .update(createProductosRecordData(
                                     nombre: _model.txtNombreController.text,
                                     disponibilidad: _model.checkboxValue,
-                                    peso: updatePesoStruct(
-                                      widget.productos?.peso,
-                                      clearUnsetFields: false,
-                                    ),
                                     cantidad: int.tryParse(
                                         _model.txtCantidadController.text),
+                                    precio: int.tryParse(
+                                        _model.txtPrecioController.text),
+                                    peso: createPesoStruct(
+                                      peso: _model.txtPesoController.text,
+                                      clearUnsetFields: false,
+                                    ),
                                   ));
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        'Perfil editado con éxito',
+                                        'Producto editado con éxito',
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryBtnText,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 22.0,
                                         ),
                                       ),
                                       duration: Duration(milliseconds: 4000),

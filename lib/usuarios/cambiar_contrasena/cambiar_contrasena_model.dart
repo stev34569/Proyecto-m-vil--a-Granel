@@ -1,4 +1,4 @@
-import '/componentes_proyecto/confirmar_cambio/confirmar_cambio_widget.dart';
+import '/componentes_proyecto/confirmar_cambio_contrasena/confirmar_cambio_contrasena_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

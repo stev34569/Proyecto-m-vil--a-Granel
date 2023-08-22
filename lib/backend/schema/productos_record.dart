@@ -46,6 +46,11 @@ class ProductosRecord extends FirestoreRecord {
   int get cantidad => _cantidad ?? 0;
   bool hasCantidad() => _cantidad != null;
 
+  // "precio" field.
+  int? _precio;
+  int get precio => _precio ?? 0;
+  bool hasPrecio() => _precio != null;
+
   void _initializeFields() {
     _nombre = snapshotData['nombre'] as String?;
     _imagen = snapshotData['imagen'] as String?;
@@ -53,6 +58,7 @@ class ProductosRecord extends FirestoreRecord {
     _categoria = snapshotData['categoria'] as DocumentReference?;
     _peso = PesoStruct.maybeFromMap(snapshotData['peso']);
     _cantidad = castToType<int>(snapshotData['cantidad']);
+    _precio = castToType<int>(snapshotData['precio']);
   }
 
   static CollectionReference get collection =>
@@ -96,6 +102,7 @@ Map<String, dynamic> createProductosRecordData({
   DocumentReference? categoria,
   PesoStruct? peso,
   int? cantidad,
+  int? precio,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -105,6 +112,7 @@ Map<String, dynamic> createProductosRecordData({
       'categoria': categoria,
       'peso': PesoStruct().toMap(),
       'cantidad': cantidad,
+      'precio': precio,
     }.withoutNulls,
   );
 
@@ -124,7 +132,8 @@ class ProductosRecordDocumentEquality implements Equality<ProductosRecord> {
         e1?.disponibilidad == e2?.disponibilidad &&
         e1?.categoria == e2?.categoria &&
         e1?.peso == e2?.peso &&
-        e1?.cantidad == e2?.cantidad;
+        e1?.cantidad == e2?.cantidad &&
+        e1?.precio == e2?.precio;
   }
 
   @override
@@ -134,7 +143,8 @@ class ProductosRecordDocumentEquality implements Equality<ProductosRecord> {
         e?.disponibilidad,
         e?.categoria,
         e?.peso,
-        e?.cantidad
+        e?.cantidad,
+        e?.precio
       ]);
 
   @override

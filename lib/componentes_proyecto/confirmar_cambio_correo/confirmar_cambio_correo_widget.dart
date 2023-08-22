@@ -1,30 +1,35 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'confirmar_cambio_model.dart';
-export 'confirmar_cambio_model.dart';
+import 'confirmar_cambio_correo_model.dart';
+export 'confirmar_cambio_correo_model.dart';
 
-class ConfirmarCambioWidget extends StatefulWidget {
-  const ConfirmarCambioWidget({
+class ConfirmarCambioCorreoWidget extends StatefulWidget {
+  const ConfirmarCambioCorreoWidget({
     Key? key,
-    required this.nuevaContrasena,
-    required this.antiguaContrasena,
+    required this.nuevocorreo,
+    required this.contrasena,
   }) : super(key: key);
 
-  final String? nuevaContrasena;
-  final String? antiguaContrasena;
+  final String? nuevocorreo;
+  final String? contrasena;
 
   @override
-  _ConfirmarCambioWidgetState createState() => _ConfirmarCambioWidgetState();
+  _ConfirmarCambioCorreoWidgetState createState() =>
+      _ConfirmarCambioCorreoWidgetState();
 }
 
-class _ConfirmarCambioWidgetState extends State<ConfirmarCambioWidget> {
-  late ConfirmarCambioModel _model;
+class _ConfirmarCambioCorreoWidgetState
+    extends State<ConfirmarCambioCorreoWidget> {
+  late ConfirmarCambioCorreoModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -35,7 +40,7 @@ class _ConfirmarCambioWidgetState extends State<ConfirmarCambioWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ConfirmarCambioModel());
+    _model = createModel(context, () => ConfirmarCambioCorreoModel());
   }
 
   @override
@@ -79,7 +84,7 @@ class _ConfirmarCambioWidgetState extends State<ConfirmarCambioWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             10.0, 8.0, 10.0, 8.0),
                         child: Text(
-                          '¿ Esta seguro que desea cambiar su contraseña?\n se cerrará la sesión actual',
+                          '¿ Esta seguro que desea cambiar su correo?\n se cerrará la sesión actual',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
                               .labelMedium
@@ -123,29 +128,26 @@ class _ConfirmarCambioWidgetState extends State<ConfirmarCambioWidget> {
                       ),
                       FFButtonWidget(
                         onPressed: () async {
-                          _model.isChange = await actions.cambiarContrasena(
+                          _model.isEmailChange = await actions.cambiarCorreo(
                             context,
-                            widget.antiguaContrasena!,
-                            widget.nuevaContrasena!,
+                            widget.contrasena!,
+                            widget.nuevocorreo!,
                           );
-                          if (_model.isChange!) {
-                            context.pop();
+                          if (_model.isEmailChange!) {
+                            await currentUserReference!
+                                .update(createUsersRecordData(
+                              email: widget.nuevocorreo,
+                            ));
+                            GoRouter.of(context).prepareAuthEvent();
+                            await authManager.signOut();
+                            GoRouter.of(context).clearRedirectLocation();
 
-                            context.pushNamed(
-                              'login',
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType:
-                                      PageTransitionType.bottomToTop,
-                                ),
-                              },
-                            );
+                            context.pushNamedAuth('login', context.mounted);
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'La contraseña se actualizó correctamente',
+                                  'Correo actualizado correctamente',
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBtnText,
@@ -155,7 +157,7 @@ class _ConfirmarCambioWidgetState extends State<ConfirmarCambioWidget> {
                                 ),
                                 duration: Duration(milliseconds: 4000),
                                 backgroundColor:
-                                    FlutterFlowTheme.of(context).customColor5,
+                                    FlutterFlowTheme.of(context).secondary,
                               ),
                             );
                           } else {

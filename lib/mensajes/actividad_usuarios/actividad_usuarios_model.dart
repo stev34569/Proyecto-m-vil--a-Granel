@@ -14,6 +14,8 @@ class ActividadUsuariosModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // State field(s) for ListView widget.
   ScrollController? listViewController;
   // State field(s) for txtMensaje widget.
@@ -23,11 +25,13 @@ class ActividadUsuariosModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
+    columnController = ScrollController();
     listViewController = ScrollController();
   }
 
   void dispose() {
     unfocusNode.dispose();
+    columnController?.dispose();
     listViewController?.dispose();
     txtMensajeController?.dispose();
   }

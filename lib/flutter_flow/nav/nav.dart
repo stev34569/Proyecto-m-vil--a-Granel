@@ -189,6 +189,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'cambiarContrasenaCopy',
           path: '/cambiarContrasenaCopy',
           builder: (context, params) => CambiarContrasenaCopyWidget(),
+        ),
+        FFRoute(
+          name: 'cambiarCorreo',
+          path: '/cambiarCorreo',
+          builder: (context, params) => CambiarCorreoWidget(),
+        ),
+        FFRoute(
+          name: 'chatsCopy',
+          path: '/chatsCopy',
+          builder: (context, params) => ChatsCopyWidget(),
+        ),
+        FFRoute(
+          name: 'actividadUsuariosCopy',
+          path: '/actividadUsuariosCopy',
+          builder: (context, params) => ActividadUsuariosCopyWidget(
+            userName: params.getParam('userName', ParamType.String),
+            userEmail: params.getParam('userEmail', ParamType.String),
+            chatUser: params.getParam('chatUser', ParamType.DocumentReference,
+                false, ['chats_granel']),
+            userRef: params.getParam(
+                'userRef', ParamType.DocumentReference, false, ['users']),
+            userProfile: params.getParam('userProfile', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'usuariosChats',
+          path: '/usuariosChats',
+          builder: (context, params) => UsuariosChatsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

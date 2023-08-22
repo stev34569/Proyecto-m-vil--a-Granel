@@ -40,8 +40,6 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
 
     _model.txtNombreUsuarioController ??=
         TextEditingController(text: widget.usuarioSeleccionado?.displayName);
-    _model.txtEmailUsuarioController ??=
-        TextEditingController(text: widget.usuarioSeleccionado?.email);
     _model.txtTelefonoUsuarioController ??=
         TextEditingController(text: widget.usuarioSeleccionado?.phoneNumber);
     _model.txtCedulaController ??= TextEditingController(
@@ -181,72 +179,6 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     validator: _model
                                         .txtNombreUsuarioControllerValidator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 8.0, 0.0),
-                                  child: TextFormField(
-                                    controller:
-                                        _model.txtEmailUsuarioController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Email',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFF39D2C0),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFF39D2C0),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFE5092F),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFE5092F),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    validator: _model
-                                        .txtEmailUsuarioControllerValidator
                                         .asValidator(context),
                                   ),
                                 ),
@@ -481,8 +413,6 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                       .update(createUsersRecordData(
                                     displayName:
                                         _model.txtNombreUsuarioController.text,
-                                    email:
-                                        _model.txtEmailUsuarioController.text,
                                     empleado: !_model.checkboxAValue!,
                                     phoneNumber: _model
                                         .txtTelefonoUsuarioController.text,

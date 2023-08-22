@@ -70,7 +70,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                 width: MediaQuery.sizeOf(context).width * 1.0,
                 height: 100.0,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  color: Color(0xFF2072DF),
                 ),
                 child: Padding(
                   padding:
@@ -81,7 +81,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Column(
                             mainAxisSize: MainAxisSize.max,
@@ -99,9 +99,10 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                       context.safePop();
                                     },
                                     child: Icon(
-                                      Icons.arrow_back,
-                                      color: Color(0xFFBDBDBD),
-                                      size: 24.0,
+                                      Icons.reply,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 35.0,
                                     ),
                                   ),
                                   Padding(
@@ -115,7 +116,10 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                         shape: BoxShape.circle,
                                       ),
                                       child: Image.network(
-                                        widget.foto!,
+                                        valueOrDefault<String>(
+                                          widget.foto,
+                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/qymre9eth7zx/e368718f-7958-4032-8347-5e1737b9e9f5.jpg',
+                                        ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -125,18 +129,23 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                         15.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 5.0),
                                           child: Text(
-                                            'Empleado',
+                                            widget.name!,
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
+                                                  fontSize: 17.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -148,9 +157,11 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Readex Pro',
-                                                color: Color(0xFF828282),
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w500,
                                               ),
                                         ),
                                       ],
@@ -164,7 +175,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                       ),
                       Divider(
                         thickness: 1.0,
-                        color: Color(0xFF828282),
+                        color: Color(0xCD14181B),
                       ),
                     ],
                   ),
@@ -179,55 +190,58 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      StreamBuilder<List<ChatRoomRecord>>(
-                        stream: queryChatRoomRecord(
-                          queryBuilder: (chatRoomRecord) => chatRoomRecord
-                              .where('idConversacion',
-                                  isEqualTo: functions.generarIdChat(
-                                      currentUserUid, widget.idOtro!))
-                              .orderBy('time'),
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: SpinKitThreeBounce(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 50.0,
+                  child: SingleChildScrollView(
+                    controller: _model.columnController,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        StreamBuilder<List<ChatRoomRecord>>(
+                          stream: queryChatRoomRecord(
+                            queryBuilder: (chatRoomRecord) => chatRoomRecord
+                                .where('idConversacion',
+                                    isEqualTo: functions.generarIdChat(
+                                        currentUserUid, widget.idOtro!))
+                                .orderBy('time'),
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: SpinKitThreeBounce(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-                          List<ChatRoomRecord> listViewChatRoomRecordList =
-                              snapshot.data!;
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listViewChatRoomRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewChatRoomRecord =
-                                  listViewChatRoomRecordList[listViewIndex];
-                              return ChatItemWidget(
-                                key: Key(
-                                    'Keyrd9_${listViewIndex}_of_${listViewChatRoomRecordList.length}'),
-                                message: listViewChatRoomRecord.message,
-                                senderId: listViewChatRoomRecord.senderId,
-                                time: listViewChatRoomRecord.time!,
-                                foto: widget.foto!,
                               );
-                            },
-                            controller: _model.listViewController,
-                          );
-                        },
-                      ),
-                    ],
+                            }
+                            List<ChatRoomRecord> listViewChatRoomRecordList =
+                                snapshot.data!;
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: listViewChatRoomRecordList.length,
+                              itemBuilder: (context, listViewIndex) {
+                                final listViewChatRoomRecord =
+                                    listViewChatRoomRecordList[listViewIndex];
+                                return ChatItemWidget(
+                                  key: Key(
+                                      'Keyrd9_${listViewIndex}_of_${listViewChatRoomRecordList.length}'),
+                                  message: listViewChatRoomRecord.message,
+                                  senderId: listViewChatRoomRecord.senderId,
+                                  time: listViewChatRoomRecord.time!,
+                                  foto: widget.foto!,
+                                );
+                              },
+                              controller: _model.listViewController,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -252,13 +266,14 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Container(
-                              width: MediaQuery.sizeOf(context).width * 0.8,
+                              width: MediaQuery.sizeOf(context).width * 0.75,
                               height: 60.0,
                               decoration: BoxDecoration(
                                 color: Color(0xFFE6E8F4),
                                 borderRadius: BorderRadius.circular(6.0),
                                 border: Border.all(
-                                  color: Color(0xFF828282),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                 ),
                               ),
                               child: Row(
@@ -273,10 +288,14 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Escribe...',
+                                          labelText: 'Escribe aquí...',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: Color(0xCE57636C),
+                                                  ),
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium,
@@ -294,7 +313,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                             borderSide: BorderSide(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primary,
+                                                      .customColor3,
                                               width: 2.0,
                                             ),
                                             borderRadius:
@@ -334,65 +353,71 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                     height: 40.0,
                                     child: VerticalDivider(
                                       thickness: 1.0,
-                                      color: Color(0xFFBEBEBE),
+                                      color: Color(0xFFBEB7B7),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 33.0,
-                              height: 60.0,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE6E8F4),
-                                border: Border.all(
-                                  color: Color(0xFFE6E8F4),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      await ChatRoomRecord.collection
-                                          .doc()
-                                          .set({
-                                        ...createChatRoomRecordData(
-                                          message:
-                                              _model.txtMensajeController.text,
-                                          senderId: currentUserUid,
-                                          receiverId: widget.idOtro,
-                                          idConversacion:
-                                              functions.generarIdChat(
-                                                  currentUserUid,
-                                                  widget.idOtro!),
-                                        ),
-                                        'time': FieldValue.serverTimestamp(),
-                                      });
-                                      setState(() {
-                                        _model.txtMensajeController?.clear();
-                                      });
-                                      await _model.listViewController
-                                          ?.animateTo(
-                                        _model.listViewController!.position
-                                            .maxScrollExtent,
-                                        duration: Duration(milliseconds: 100),
-                                        curve: Curves.ease,
-                                      );
-                                    },
-                                    child: Icon(
-                                      Icons.send,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 35.0,
-                                    ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 7.0),
+                              child: Container(
+                                width: 45.0,
+                                height: 45.0,
+                                decoration: BoxDecoration(
+                                  color:
+                                      FlutterFlowTheme.of(context).customColor5,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Color(0xFFE6E8F4),
                                   ),
-                                ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        await ChatRoomRecord.collection
+                                            .doc()
+                                            .set({
+                                          ...createChatRoomRecordData(
+                                            message: _model
+                                                .txtMensajeController.text,
+                                            senderId: currentUserUid,
+                                            receiverId: widget.idOtro,
+                                            idConversacion:
+                                                functions.generarIdChat(
+                                                    currentUserUid,
+                                                    widget.idOtro!),
+                                          ),
+                                          'time': FieldValue.serverTimestamp(),
+                                        });
+                                        setState(() {
+                                          _model.txtMensajeController?.clear();
+                                        });
+                                        await _model.listViewController
+                                            ?.animateTo(
+                                          _model.listViewController!.position
+                                              .maxScrollExtent,
+                                          duration: Duration(milliseconds: 100),
+                                          curve: Curves.ease,
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.send,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

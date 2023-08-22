@@ -29,3 +29,10 @@ export '/mensajes/actividad_usuarios/actividad_usuarios_widget.dart'
     show ActividadUsuariosWidget;
 export '/pruebas/cambiar_contrasena_copy/cambiar_contrasena_copy_widget.dart'
     show CambiarContrasenaCopyWidget;
+export '/usuarios/cambiar_correo/cambiar_correo_widget.dart'
+    show CambiarCorreoWidget;
+export '/mugi_mensajes/chats_copy/chats_copy_widget.dart' show ChatsCopyWidget;
+export '/mugi_mensajes/actividad_usuarios_copy/actividad_usuarios_copy_widget.dart'
+    show ActividadUsuariosCopyWidget;
+export '/mugi_mensajes/usuarios_chats/usuarios_chats_widget.dart'
+    show UsuariosChatsWidget;

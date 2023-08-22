@@ -113,64 +113,49 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                15.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Productos',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0.0, 0.0),
+                          child: Container(
+                            width: 160.0,
+                            height: 160.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Image.network(
+                                valueOrDefault<String>(
+                                  _model.uploadedFileUrl,
+                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
+                                ),
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      25.0, 0.0, 0.0, 0.0),
-                                  child: Container(
-                                    width: 100.0,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          _model.uploadedFileUrl,
-                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
-                                        ),
-                                        width: 300.0,
-                                        height: 200.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
-                        child: FFButtonWidget(
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FFButtonWidget(
                           onPressed: () async {
                             final selectedMedia =
                                 await selectMediaWithSourceBottomSheet(
@@ -234,8 +219,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                             size: 15.0,
                           ),
                           options: FFButtonOptions(
-                            width: 136.0,
-                            height: 40.0,
+                            width: 150.0,
+                            height: 50.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -246,6 +231,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .override(
                                   fontFamily: 'Readex Pro',
                                   color: Colors.white,
+                                  fontSize: 20.0,
                                 ),
                             elevation: 3.0,
                             borderSide: BorderSide(
@@ -255,8 +241,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -264,7 +250,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 17.0, 8.0, 0.0),
+                              20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtNombreController,
                             autofocus: true,
@@ -294,7 +280,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0xFF4B39EF),
+                                  color:
+                                      FlutterFlowTheme.of(context).customColor4,
                                   width: 2.0,
                                 ),
                                 borderRadius: BorderRadius.circular(50.0),
@@ -314,15 +301,17 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
                               filled: true,
-                              fillColor: Color(0x80FFFFFF),
+                              fillColor: Color(0xA5FFFFFF),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: Colors.black,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 21.0,
                                 ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                             cursorColor: Colors.white,
                             validator: _model.txtNombreControllerValidator
                                 .asValidator(context),
@@ -337,7 +326,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 17.0, 8.0, 0.0),
+                              20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtCantidadController,
                             autofocus: true,
@@ -387,14 +376,17 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
                               filled: true,
-                              fillColor: Color(0x81FFFFFF),
+                              fillColor: Color(0xA5FFFFFF),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: Colors.black,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 21.0,
                                 ),
+                            textAlign: TextAlign.start,
                             validator: _model.txtCantidadControllerValidator
                                 .asValidator(context),
                           ),
@@ -409,7 +401,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 17.0, 8.0, 0.0),
+                              20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtPesoController,
                             autofocus: true,
@@ -459,15 +451,17 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
                               filled: true,
-                              fillColor: Color(0x81FFFFFF),
+                              fillColor: Color(0xA5FFFFFF),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: Colors.black,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 21.0,
                                 ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                             validator: _model.txtPesoControllerValidator
                                 .asValidator(context),
                           ),
@@ -481,19 +475,21 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 17.0, 8.0, 0.0),
+                              20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtPrecioController,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
-                              labelText: 'Precios',
+                              labelText: 'Precio',
                               labelStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
+                                  .labelMedium
                                   .override(
                                     fontFamily: 'Montserrat',
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    fontSize: 16.0,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
@@ -529,15 +525,17 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 borderRadius: BorderRadius.circular(50.0),
                               ),
                               filled: true,
-                              fillColor: Color(0x81FFFFFF),
+                              fillColor: Color(0xA5FFFFFF),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 21.0,
                                 ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                             cursorColor: Colors.black,
                             validator: _model.txtPrecioControllerValidator
                                 .asValidator(context),
@@ -546,41 +544,47 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Disponibilidad',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
-                              color: Colors.white,
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Disponibilidad',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                  ),
+                        ),
+                        Theme(
+                          data: ThemeData(
+                            checkboxTheme: CheckboxThemeData(
+                              visualDensity: VisualDensity.compact,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
                             ),
-                      ),
-                      Theme(
-                        data: ThemeData(
-                          checkboxTheme: CheckboxThemeData(
-                            visualDensity: VisualDensity.compact,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
+                            unselectedWidgetColor:
+                                FlutterFlowTheme.of(context).secondaryText,
                           ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).secondaryText,
+                          child: Checkbox(
+                            value: _model.checkDisponibleValue ??= true,
+                            onChanged: (newValue) async {
+                              setState(() =>
+                                  _model.checkDisponibleValue = newValue!);
+                            },
+                            activeColor: Color(0xFF2CEBDA),
+                            checkColor: FlutterFlowTheme.of(context).info,
+                          ),
                         ),
-                        child: Checkbox(
-                          value: _model.checkDisponibleValue ??= true,
-                          onChanged: (newValue) async {
-                            setState(
-                                () => _model.checkDisponibleValue = newValue!);
-                          },
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                          checkColor: FlutterFlowTheme.of(context).info,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding:
@@ -621,10 +625,12 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                           text: 'Volver',
                           icon: Icon(
                             Icons.reply,
-                            size: 15.0,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 19.0,
                           ),
                           options: FFButtonOptions(
-                            height: 40.0,
+                            width: 150.0,
+                            height: 50.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -634,11 +640,13 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .titleSmall
                                 .override(
                                   fontFamily: 'Readex Pro',
-                                  color: Colors.black,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 20.0,
                                 ),
                             elevation: 3.0,
                             borderSide: BorderSide(
-                              color: Colors.transparent,
+                              color: FlutterFlowTheme.of(context).noColor,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
@@ -661,16 +669,20 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                       widget.pregistrarProducto?.reference,
                                   cantidad: int.tryParse(
                                       _model.txtCantidadController.text),
+                                  precio: int.tryParse(
+                                      _model.txtPrecioController.text),
                                 ));
                             context.safePop();
                           },
                           text: 'Guardar',
                           icon: Icon(
                             Icons.save,
-                            size: 15.0,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 19.0,
                           ),
                           options: FFButtonOptions(
-                            height: 40.0,
+                            width: 150.0,
+                            height: 50.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -680,7 +692,9 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .titleSmall
                                 .override(
                                   fontFamily: 'Readex Pro',
-                                  color: Colors.black,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 40.0,
                                 ),
                             elevation: 3.0,
                             borderSide: BorderSide(

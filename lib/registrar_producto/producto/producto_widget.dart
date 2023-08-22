@@ -40,7 +40,7 @@ class _ProductoWidgetState extends State<ProductoWidget>
       effects: [
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 1000.ms,
+          delay: 730.ms,
           duration: 1210.ms,
           begin: 0.0,
           end: 1.0,
@@ -128,7 +128,7 @@ class _ProductoWidgetState extends State<ProductoWidget>
                 Expanded(
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                     child: StreamBuilder<List<ProductosRecord>>(
                       stream: queryProductosRecord(
                         queryBuilder: (productosRecord) =>
@@ -166,7 +166,7 @@ class _ProductoWidgetState extends State<ProductoWidget>
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Card(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: Color(0xBBFFFFFF),
+                                  color: Color(0xCCFFFFFF),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
@@ -252,6 +252,38 @@ class _ProductoWidgetState extends State<ProductoWidget>
                                                         fontSize: 16.0,
                                                         fontWeight:
                                                             FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ),
+                                              Text(
+                                                'Precio',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 5.0, 5.0, 5.0),
+                                                child: Text(
+                                                  listViewProductosRecord.precio
+                                                      .toString(),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color:
+                                                            Color(0xFF2400FF),
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
                                                 ),
                                               ),
@@ -483,7 +515,7 @@ class _ProductoWidgetState extends State<ProductoWidget>
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 60.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.pushNamed(

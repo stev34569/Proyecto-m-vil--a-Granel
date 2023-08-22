@@ -164,8 +164,8 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      width: 200.0,
-                                      height: 200.0,
+                                      width: 160.0,
+                                      height: 160.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
@@ -607,7 +607,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  'Cambiar la Contraseña',
+                                                  'Cambiar la contraseña',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -640,6 +640,99 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 12.0, 10.0),
+                                child: MouseRegion(
+                                  opaque: false,
+                                  cursor: SystemMouseCursors.click ??
+                                      MouseCursor.defer,
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed('cambiarCorreo');
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 150),
+                                      curve: Curves.easeInOut,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: _model.mouseRegionHovered5!
+                                            ? Color(0xFFF1F4F8)
+                                            : Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: Color(0x8614181B),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 8.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      12.0, 0.0, 0.0, 0.0),
+                                              child: Icon(
+                                                Icons.mark_email_read_outlined,
+                                                color: Color(0xFF14181B),
+                                                size: 27.0,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'Cambiar el correo',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color:
+                                                            Color(0xFF14181B),
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onEnter: ((event) async {
+                                    setState(() =>
+                                        _model.mouseRegionHovered5 = true);
+                                  }),
+                                  onExit: ((event) async {
+                                    setState(() =>
+                                        _model.mouseRegionHovered5 = false);
+                                  }),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 12.0, 0.0),
                                 child: MouseRegion(
                                   opaque: false,
@@ -650,7 +743,7 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                     curve: Curves.easeInOut,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: _model.mouseRegionHovered5!
+                                      color: _model.mouseRegionHovered6!
                                           ? Color(0xFFF1F4F8)
                                           : Colors.white,
                                       boxShadow: [
@@ -729,11 +822,11 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                                   ),
                                   onEnter: ((event) async {
                                     setState(() =>
-                                        _model.mouseRegionHovered5 = true);
+                                        _model.mouseRegionHovered6 = true);
                                   }),
                                   onExit: ((event) async {
                                     setState(() =>
-                                        _model.mouseRegionHovered5 = false);
+                                        _model.mouseRegionHovered6 = false);
                                   }),
                                 ),
                               ),
@@ -743,65 +836,35 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                       ),
                     ],
                   ),
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 15.0, 0.0, 15.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                enableDrag: false,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () => FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode),
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: EditarUsuarioWidget(
-                                        perfilUsuario: currentUserReference!.id,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ).then((value) => setState(() {}));
-                            },
-                            text: 'Editar información',
-                            options: FFButtonOptions(
-                              height: 47.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).customColor5,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 20.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
-                        ),
-                        FFButtonWidget(
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 15.0, 0.0, 15.0),
+                        child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed('registrarEmpleado');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: EditarUsuarioWidget(
+                                      perfilUsuario: currentUserReference!.id,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
                           },
-                          text: 'Agregar empleado',
+                          text: 'Editar información',
                           options: FFButtonOptions(
                             height: 47.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -825,40 +888,67 @@ class _PerfilAdministradorWidgetState extends State<PerfilAdministradorWidget>
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
-                        Padding(
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          context.pushNamed('registrarEmpleado');
+                        },
+                        text: 'Agregar empleado',
+                        options: FFButtonOptions(
+                          height: 47.0,
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 15.0, 0.0, 15.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.pushNamed('listaUsuarios');
-                            },
-                            text: 'Lista de empleados',
-                            options: FFButtonOptions(
-                              height: 47.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).customColor5,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 20.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).customColor5,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 20.0,
                               ),
-                              borderRadius: BorderRadius.circular(15.0),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 15.0, 0.0, 15.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed('listaUsuarios');
+                          },
+                          text: 'Lista de empleados',
+                          options: FFButtonOptions(
+                            height: 47.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).customColor5,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 20.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
                             ),
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ).animateOnPageLoad(
                       animationsMap['columnOnPageLoadAnimation']!),
                 ],

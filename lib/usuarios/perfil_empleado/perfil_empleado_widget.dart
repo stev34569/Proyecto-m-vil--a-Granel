@@ -163,8 +163,8 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      width: 200.0,
-                                      height: 200.0,
+                                      width: 160.0,
+                                      height: 160.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
@@ -606,7 +606,7 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  'Cambiar la Contraseña',
+                                                  'Cambiar la contraseña',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -639,6 +639,99 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 12.0, 10.0),
+                                child: MouseRegion(
+                                  opaque: false,
+                                  cursor: SystemMouseCursors.click ??
+                                      MouseCursor.defer,
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed('cambiarCorreo');
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 150),
+                                      curve: Curves.easeInOut,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: _model.mouseRegionHovered5!
+                                            ? Color(0xFFF1F4F8)
+                                            : Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: Color(0x8614181B),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 8.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      12.0, 0.0, 0.0, 0.0),
+                                              child: Icon(
+                                                Icons.mark_email_read_outlined,
+                                                color: Color(0xFF14181B),
+                                                size: 27.0,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'Cambiar el correo',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color:
+                                                            Color(0xFF14181B),
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onEnter: ((event) async {
+                                    setState(() =>
+                                        _model.mouseRegionHovered5 = true);
+                                  }),
+                                  onExit: ((event) async {
+                                    setState(() =>
+                                        _model.mouseRegionHovered5 = false);
+                                  }),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 12.0, 0.0),
                                 child: MouseRegion(
                                   opaque: false,
@@ -649,7 +742,7 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
                                     curve: Curves.easeInOut,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: _model.mouseRegionHovered5!
+                                      color: _model.mouseRegionHovered6!
                                           ? Color(0xFFF1F4F8)
                                           : Colors.white,
                                       boxShadow: [
@@ -728,11 +821,11 @@ class _PerfilEmpleadoWidgetState extends State<PerfilEmpleadoWidget>
                                   ),
                                   onEnter: ((event) async {
                                     setState(() =>
-                                        _model.mouseRegionHovered5 = true);
+                                        _model.mouseRegionHovered6 = true);
                                   }),
                                   onExit: ((event) async {
                                     setState(() =>
-                                        _model.mouseRegionHovered5 = false);
+                                        _model.mouseRegionHovered6 = false);
                                   }),
                                 ),
                               ),

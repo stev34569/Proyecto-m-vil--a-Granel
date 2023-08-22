@@ -120,13 +120,14 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 7.0),
                       child: Text(
-                        'Imagen de categoría',
+                        'Imagen de categoría agregada:',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,
+                              fontSize: 16.0,
                             ),
                       ),
                     ),
@@ -135,8 +136,8 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 100.0,
-                          height: 100.0,
+                          width: 120.0,
+                          height: 120.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -144,7 +145,7 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                           ),
                           child: Hero(
                             tag: valueOrDefault<String>(
-                              _model.uploadedFileUrl,
+                              _model.uploadedFileUrl1,
                               'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
                             ),
                             transitionOnUserGestures: true,
@@ -154,11 +155,11 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                                 fadeInDuration: Duration(milliseconds: 100),
                                 fadeOutDuration: Duration(milliseconds: 100),
                                 imageUrl: valueOrDefault<String>(
-                                  _model.uploadedFileUrl,
+                                  _model.uploadedFileUrl1,
                                   'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
                                 ),
-                                width: 300.0,
-                                height: 200.0,
+                                width: double.infinity,
+                                height: double.infinity,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -247,7 +248,7 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            setState(() => _model.isDataUploading = true);
+                            setState(() => _model.isDataUploading1 = true);
                             var selectedUploadedFiles = <FFUploadedFile>[];
 
                             var downloadUrls = <String>[];
@@ -272,15 +273,15 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                                   .map((u) => u!)
                                   .toList();
                             } finally {
-                              _model.isDataUploading = false;
+                              _model.isDataUploading1 = false;
                             }
                             if (selectedUploadedFiles.length ==
                                     selectedMedia.length &&
                                 downloadUrls.length == selectedMedia.length) {
                               setState(() {
-                                _model.uploadedLocalFile =
+                                _model.uploadedLocalFile1 =
                                     selectedUploadedFiles.first;
-                                _model.uploadedFileUrl = downloadUrls.first;
+                                _model.uploadedFileUrl1 = downloadUrls.first;
                               });
                             } else {
                               setState(() {});
@@ -293,7 +294,7 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                               .set(createCategoriaRecordData(
                                 nombre:
                                     _model.txtNombreCategoriaController.text,
-                                imagen: _model.uploadedFileUrl,
+                                imagen: _model.uploadedFileUrl1,
                               ));
                           setState(() {
                             _model.txtNombreCategoriaController?.clear();
@@ -329,7 +330,7 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                 child: Text(
                   'Seleccionar categoría',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -416,25 +417,133 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.network(
-                                                valueOrDefault<String>(
-                                                  gridViewCategoriaRecord
-                                                      .imagen,
-                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
-                                                ),
-                                                width:
-                                                    MediaQuery.sizeOf(context)
+                                            child: Stack(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: Image.network(
+                                                    valueOrDefault<String>(
+                                                      gridViewCategoriaRecord
+                                                          .imagen,
+                                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/5cj1h3qn0462/31080.png',
+                                                    ),
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
                                                             .width *
                                                         1.0,
-                                                height:
-                                                    MediaQuery.sizeOf(context)
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
                                                             .height *
                                                         0.1,
-                                                fit: BoxFit.cover,
-                                              ),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    final selectedMedia =
+                                                        await selectMediaWithSourceBottomSheet(
+                                                      context: context,
+                                                      allowPhoto: true,
+                                                    );
+                                                    if (selectedMedia != null &&
+                                                        selectedMedia.every((m) =>
+                                                            validateFileFormat(
+                                                                m.storagePath,
+                                                                context))) {
+                                                      setState(() => _model
+                                                              .isDataUploading2 =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles =
+                                                            selectedMedia
+                                                                .map((m) =>
+                                                                    FFUploadedFile(
+                                                                      name: m
+                                                                          .storagePath
+                                                                          .split(
+                                                                              '/')
+                                                                          .last,
+                                                                      bytes: m
+                                                                          .bytes,
+                                                                      height: m
+                                                                          .dimensions
+                                                                          ?.height,
+                                                                      width: m
+                                                                          .dimensions
+                                                                          ?.width,
+                                                                      blurHash:
+                                                                          m.blurHash,
+                                                                    ))
+                                                                .toList();
+
+                                                        downloadUrls =
+                                                            (await Future.wait(
+                                                          selectedMedia.map(
+                                                            (m) async =>
+                                                                await uploadData(
+                                                                    m.storagePath,
+                                                                    m.bytes),
+                                                          ),
+                                                        ))
+                                                                .where((u) =>
+                                                                    u != null)
+                                                                .map((u) => u!)
+                                                                .toList();
+                                                      } finally {
+                                                        _model.isDataUploading2 =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        setState(() {
+                                                          _model.uploadedLocalFile2 =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl2 =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        setState(() {});
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    await gridViewCategoriaRecord
+                                                        .reference
+                                                        .update(
+                                                            createCategoriaRecordData(
+                                                      imagen: _model
+                                                          .uploadedFileUrl2,
+                                                    ));
+                                                  },
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons.camera,
+                                                    color: Colors.white,
+                                                    size: 24.0,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],

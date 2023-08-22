@@ -574,11 +574,12 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 'Usuario creado con éxito',
                                 style: TextStyle(
                                   color: FlutterFlowTheme.of(context).info,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 22.0,
                                 ),
                               ),
                               duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
+                              backgroundColor: Color(0xFF2CEBDA),
                             ),
                           );
                           setState(() {

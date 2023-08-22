@@ -25,10 +25,12 @@ class EditarProductoModel extends FlutterFlowModel {
   // State field(s) for txtCantidad widget.
   TextEditingController? txtCantidadController;
   String? Function(BuildContext, String?)? txtCantidadControllerValidator;
-  // State field(s) for txtTelefonoUsuario widget.
-  TextEditingController? txtTelefonoUsuarioController;
-  String? Function(BuildContext, String?)?
-      txtTelefonoUsuarioControllerValidator;
+  // State field(s) for txtPrecio widget.
+  TextEditingController? txtPrecioController;
+  String? Function(BuildContext, String?)? txtPrecioControllerValidator;
+  // State field(s) for txtPeso widget.
+  TextEditingController? txtPesoController;
+  String? Function(BuildContext, String?)? txtPesoControllerValidator;
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
 
@@ -39,7 +41,8 @@ class EditarProductoModel extends FlutterFlowModel {
   void dispose() {
     txtNombreController?.dispose();
     txtCantidadController?.dispose();
-    txtTelefonoUsuarioController?.dispose();
+    txtPrecioController?.dispose();
+    txtPesoController?.dispose();
   }
 
   /// Action blocks are added here.

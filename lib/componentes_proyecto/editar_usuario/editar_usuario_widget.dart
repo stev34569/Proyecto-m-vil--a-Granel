@@ -39,8 +39,6 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
 
     _model.txtNombreUsuarioController ??=
         TextEditingController(text: currentUserDisplayName);
-    _model.txtEmailUsuarioController ??=
-        TextEditingController(text: currentUserEmail);
     _model.txtTelefonoUsuarioController ??=
         TextEditingController(text: currentPhoneNumber);
   }
@@ -196,72 +194,6 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 8.0, 0.0),
-                                  child: TextFormField(
-                                    controller:
-                                        _model.txtEmailUsuarioController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Email',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFF39D2C0),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFF39D2C0),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFE5092F),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFE5092F),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    validator: _model
-                                        .txtEmailUsuarioControllerValidator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 8.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => TextFormField(
                                       controller:
@@ -364,8 +296,6 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
                                       .update(createUsersRecordData(
                                     displayName:
                                         _model.txtNombreUsuarioController.text,
-                                    email:
-                                        _model.txtEmailUsuarioController.text,
                                     phoneNumber: _model
                                         .txtTelefonoUsuarioController.text,
                                   ));

@@ -1,4 +1,4 @@
-import '/componentes_proyecto/confirmar_cambio_contrasena/confirmar_cambio_contrasena_widget.dart';
+import '/componentes_proyecto/confirmar_cambio_correo/confirmar_cambio_correo_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -10,20 +10,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'cambiar_contrasena_model.dart';
-export 'cambiar_contrasena_model.dart';
+import 'cambiar_correo_model.dart';
+export 'cambiar_correo_model.dart';
 
-class CambiarContrasenaWidget extends StatefulWidget {
-  const CambiarContrasenaWidget({Key? key}) : super(key: key);
+class CambiarCorreoWidget extends StatefulWidget {
+  const CambiarCorreoWidget({Key? key}) : super(key: key);
 
   @override
-  _CambiarContrasenaWidgetState createState() =>
-      _CambiarContrasenaWidgetState();
+  _CambiarCorreoWidgetState createState() => _CambiarCorreoWidgetState();
 }
 
-class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
+class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
     with TickerProviderStateMixin {
-  late CambiarContrasenaModel _model;
+  late CambiarCorreoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -81,10 +80,10 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CambiarContrasenaModel());
+    _model = createModel(context, () => CambiarCorreoModel());
 
-    _model.antiguaContrasenaController ??= TextEditingController();
-    _model.nuevaContrasenaController ??= TextEditingController();
+    _model.nuevoCorreoController ??= TextEditingController();
+    _model.contrasenaController ??= TextEditingController();
   }
 
   @override
@@ -164,7 +163,7 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                       child: Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          'Cambiar contraseña',
+                          'Cambiar correo',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -185,8 +184,75 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                   padding:
                       EdgeInsetsDirectional.fromSTEB(30.0, 20.0, 30.0, 0.0),
                   child: TextFormField(
-                    controller: _model.antiguaContrasenaController,
-                    obscureText: !_model.antiguaContrasenaVisibility,
+                    controller: _model.nuevoCorreoController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Ingrese su nuevo correo',
+                      labelStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Lexend Deca',
+                                color: Color(0xFF95A1AC),
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                      hintStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Lexend Deca',
+                                color: Color(0xFF95A1AC),
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsetsDirectional.fromSTEB(
+                          20.0, 24.0, 20.0, 24.0),
+                    ),
+                    style: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF0F1113),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: _model.nuevoCorreoControllerValidator
+                        .asValidator(context),
+                  ).animateOnPageLoad(
+                      animationsMap['textFieldOnPageLoadAnimation1']!),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(30.0, 20.0, 30.0, 0.0),
+                  child: TextFormField(
+                    controller: _model.contrasenaController,
+                    obscureText: !_model.contrasenaVisibility,
                     decoration: InputDecoration(
                       labelText: 'Ingrese su contraseña actual',
                       labelStyle:
@@ -237,12 +303,12 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                           20.0, 24.0, 20.0, 24.0),
                       suffixIcon: InkWell(
                         onTap: () => setState(
-                          () => _model.antiguaContrasenaVisibility =
-                              !_model.antiguaContrasenaVisibility,
+                          () => _model.contrasenaVisibility =
+                              !_model.contrasenaVisibility,
                         ),
                         focusNode: FocusNode(skipTraversal: true),
                         child: Icon(
-                          _model.antiguaContrasenaVisibility
+                          _model.contrasenaVisibility
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                           color: Color(0xFF757575),
@@ -257,88 +323,7 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                           fontWeight: FontWeight.normal,
                         ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: _model.antiguaContrasenaControllerValidator
-                        .asValidator(context),
-                  ).animateOnPageLoad(
-                      animationsMap['textFieldOnPageLoadAnimation1']!),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(30.0, 20.0, 30.0, 0.0),
-                  child: TextFormField(
-                    controller: _model.nuevaContrasenaController,
-                    obscureText: !_model.nuevaContrasenaVisibility,
-                    decoration: InputDecoration(
-                      labelText: 'Ingrese su nueva contraseña ',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.override(
-                                fontFamily: 'Lexend Deca',
-                                color: Color(0xFF95A1AC),
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                      hintStyle:
-                          FlutterFlowTheme.of(context).bodyMedium.override(
-                                fontFamily: 'Lexend Deca',
-                                color: Color(0xFF95A1AC),
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 24.0, 20.0, 24.0),
-                      suffixIcon: InkWell(
-                        onTap: () => setState(
-                          () => _model.nuevaContrasenaVisibility =
-                              !_model.nuevaContrasenaVisibility,
-                        ),
-                        focusNode: FocusNode(skipTraversal: true),
-                        child: Icon(
-                          _model.nuevaContrasenaVisibility
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: Color(0xFF757575),
-                          size: 22.0,
-                        ),
-                      ),
-                    ),
-                    style: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Outfit',
-                          color: Color(0xFF0F1113),
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: _model.nuevaContrasenaControllerValidator
+                    validator: _model.contrasenaControllerValidator
                         .asValidator(context),
                   ).animateOnPageLoad(
                       animationsMap['textFieldOnPageLoadAnimation2']!),
@@ -358,20 +343,18 @@ class _CambiarContrasenaWidgetState extends State<CambiarContrasenaWidget>
                                 .requestFocus(_model.unfocusNode),
                             child: Padding(
                               padding: MediaQuery.viewInsetsOf(context),
-                              child: ConfirmarCambioContrasenaWidget(
-                                antiguaContrasena:
-                                    _model.antiguaContrasenaController.text,
-                                nuevaContrasena:
-                                    _model.nuevaContrasenaController.text,
+                              child: ConfirmarCambioCorreoWidget(
+                                nuevocorreo: _model.nuevoCorreoController.text,
+                                contrasena: _model.contrasenaController.text,
                               ),
                             ),
                           );
                         },
                       ).then((value) => setState(() {}));
                     },
-                    text: 'Actualizar contraseña',
+                    text: 'Actualizar correo',
                     options: FFButtonOptions(
-                      width: 230.0,
+                      width: 200.0,
                       height: 50.0,
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),

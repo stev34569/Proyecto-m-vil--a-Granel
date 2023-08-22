@@ -15,9 +15,6 @@ class EditarUsuarioModel extends FlutterFlowModel {
   // State field(s) for txtNombreUsuario widget.
   TextEditingController? txtNombreUsuarioController;
   String? Function(BuildContext, String?)? txtNombreUsuarioControllerValidator;
-  // State field(s) for txtEmailUsuario widget.
-  TextEditingController? txtEmailUsuarioController;
-  String? Function(BuildContext, String?)? txtEmailUsuarioControllerValidator;
   // State field(s) for txtTelefonoUsuario widget.
   TextEditingController? txtTelefonoUsuarioController;
   String? Function(BuildContext, String?)?
@@ -29,7 +26,6 @@ class EditarUsuarioModel extends FlutterFlowModel {
 
   void dispose() {
     txtNombreUsuarioController?.dispose();
-    txtEmailUsuarioController?.dispose();
     txtTelefonoUsuarioController?.dispose();
   }
 
