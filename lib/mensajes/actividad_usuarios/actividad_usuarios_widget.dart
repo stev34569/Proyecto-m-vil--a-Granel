@@ -2,10 +2,12 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/mensajes/chat_item/chat_item_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -15,16 +17,20 @@ export 'actividad_usuarios_model.dart';
 class ActividadUsuariosWidget extends StatefulWidget {
   const ActividadUsuariosWidget({
     Key? key,
-    required this.idOtro,
-    required this.foto,
-    required this.name,
-    required this.email,
-  }) : super(key: key);
+    String? idOtro,
+    String? foto,
+    String? name,
+    String? email,
+  })  : this.idOtro = idOtro ?? '0',
+        this.foto = foto ?? '0',
+        this.name = name ?? '0',
+        this.email = email ?? '0',
+        super(key: key);
 
-  final String? idOtro;
-  final String? foto;
-  final String? name;
-  final String? email;
+  final String idOtro;
+  final String foto;
+  final String name;
+  final String email;
 
   @override
   _ActividadUsuariosWidgetState createState() =>
@@ -42,6 +48,9 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
     _model = createModel(context, () => ActividadUsuariosModel());
 
     _model.txtMensajeController ??= TextEditingController();
+    _model.txtMensajeFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -53,10 +62,21 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFE6E8F4),
@@ -130,7 +150,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -139,19 +159,28 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 5.0),
                                           child: Text(
-                                            widget.name!,
+                                            valueOrDefault<String>(
+                                              widget.name,
+                                              '0',
+                                            ),
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBtnText,
                                                   fontSize: 17.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
                                         ),
                                         Text(
-                                          widget.email!,
+                                          valueOrDefault<String>(
+                                            widget.email,
+                                            '0',
+                                          ),
                                           textAlign: TextAlign.start,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -159,7 +188,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                                 fontFamily: 'Readex Pro',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .customColor6,
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -198,9 +227,35 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                         StreamBuilder<List<ChatRoomRecord>>(
                           stream: queryChatRoomRecord(
                             queryBuilder: (chatRoomRecord) => chatRoomRecord
-                                .where('idConversacion',
-                                    isEqualTo: functions.generarIdChat(
-                                        currentUserUid, widget.idOtro!))
+                                .where(
+                                  'idConversacion',
+                                  isEqualTo: valueOrDefault<String>(
+                                            functions.generarIdChat(
+                                                valueOrDefault<String>(
+                                                  currentUserUid,
+                                                  '0',
+                                                ),
+                                                valueOrDefault<String>(
+                                                  widget.idOtro,
+                                                  '0',
+                                                )),
+                                            '0',
+                                          ) !=
+                                          ''
+                                      ? valueOrDefault<String>(
+                                          functions.generarIdChat(
+                                              valueOrDefault<String>(
+                                                currentUserUid,
+                                                '0',
+                                              ),
+                                              valueOrDefault<String>(
+                                                widget.idOtro,
+                                                '0',
+                                              )),
+                                          '0',
+                                        )
+                                      : null,
+                                )
                                 .orderBy('time'),
                           ),
                           builder: (context, snapshot) {
@@ -227,13 +282,30 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                               itemBuilder: (context, listViewIndex) {
                                 final listViewChatRoomRecord =
                                     listViewChatRoomRecordList[listViewIndex];
-                                return ChatItemWidget(
-                                  key: Key(
-                                      'Keyrd9_${listViewIndex}_of_${listViewChatRoomRecordList.length}'),
-                                  message: listViewChatRoomRecord.message,
-                                  senderId: listViewChatRoomRecord.senderId,
-                                  time: listViewChatRoomRecord.time!,
-                                  foto: widget.foto!,
+                                return wrapWithModel(
+                                  model: _model.chatItemModels.getModel(
+                                    widget.name,
+                                    listViewIndex,
+                                  ),
+                                  updateCallback: () => setState(() {}),
+                                  child: ChatItemWidget(
+                                    key: Key(
+                                      'Keyrd9_${widget.name}',
+                                    ),
+                                    message: valueOrDefault<String>(
+                                      listViewChatRoomRecord.message,
+                                      'mensaje',
+                                    ),
+                                    senderId: valueOrDefault<String>(
+                                      listViewChatRoomRecord.senderId,
+                                      '0',
+                                    ),
+                                    time: listViewChatRoomRecord.time,
+                                    foto: valueOrDefault<String>(
+                                      widget.foto,
+                                      '0',
+                                    ),
+                                  ),
                                 );
                               },
                               controller: _model.listViewController,
@@ -252,7 +324,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                   color: Color(0xFFE6E8F4),
                 ),
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 30.0),
@@ -285,6 +357,7 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                           8.0, 0.0, 8.0, 0.0),
                                       child: TextFormField(
                                         controller: _model.txtMensajeController,
+                                        focusNode: _model.txtMensajeFocusNode,
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -383,21 +456,78 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        await ChatRoomRecord.collection
-                                            .doc()
-                                            .set({
+                                        var chatRoomRecordReference =
+                                            ChatRoomRecord.collection.doc();
+                                        await chatRoomRecordReference.set({
                                           ...createChatRoomRecordData(
-                                            message: _model
-                                                .txtMensajeController.text,
-                                            senderId: currentUserUid,
-                                            receiverId: widget.idOtro,
+                                            message: valueOrDefault<String>(
+                                              _model.txtMensajeController.text,
+                                              '0',
+                                            ),
+                                            senderId: valueOrDefault<String>(
+                                              currentUserUid,
+                                              '0',
+                                            ),
+                                            receiverId: valueOrDefault<String>(
+                                              widget.idOtro,
+                                              '0',
+                                            ),
                                             idConversacion:
-                                                functions.generarIdChat(
+                                                valueOrDefault<String>(
+                                              functions.generarIdChat(
+                                                  valueOrDefault<String>(
                                                     currentUserUid,
-                                                    widget.idOtro!),
+                                                    '0',
+                                                  ),
+                                                  valueOrDefault<String>(
+                                                    widget.idOtro,
+                                                    '0',
+                                                  )),
+                                              '0',
+                                            ),
                                           ),
-                                          'time': FieldValue.serverTimestamp(),
+                                          ...mapToFirestore(
+                                            {
+                                              'time':
+                                                  FieldValue.serverTimestamp(),
+                                            },
+                                          ),
                                         });
+                                        _model.enter =
+                                            ChatRoomRecord.getDocumentFromData({
+                                          ...createChatRoomRecordData(
+                                            message: valueOrDefault<String>(
+                                              _model.txtMensajeController.text,
+                                              '0',
+                                            ),
+                                            senderId: valueOrDefault<String>(
+                                              currentUserUid,
+                                              '0',
+                                            ),
+                                            receiverId: valueOrDefault<String>(
+                                              widget.idOtro,
+                                              '0',
+                                            ),
+                                            idConversacion:
+                                                valueOrDefault<String>(
+                                              functions.generarIdChat(
+                                                  valueOrDefault<String>(
+                                                    currentUserUid,
+                                                    '0',
+                                                  ),
+                                                  valueOrDefault<String>(
+                                                    widget.idOtro,
+                                                    '0',
+                                                  )),
+                                              '0',
+                                            ),
+                                          ),
+                                          ...mapToFirestore(
+                                            {
+                                              'time': DateTime.now(),
+                                            },
+                                          ),
+                                        }, chatRoomRecordReference);
                                         setState(() {
                                           _model.txtMensajeController?.clear();
                                         });
@@ -408,6 +538,8 @@ class _ActividadUsuariosWidgetState extends State<ActividadUsuariosWidget> {
                                           duration: Duration(milliseconds: 100),
                                           curve: Curves.ease,
                                         );
+
+                                        setState(() {});
                                       },
                                       child: Icon(
                                         Icons.send,

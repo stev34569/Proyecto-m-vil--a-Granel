@@ -20,7 +20,7 @@ String? prueba(bool pDisponibilidad) {
   return "Agotado";
 }
 
-String generarIdChat(
+String? generarIdChat(
   String idMia,
   String idDelOtro,
 ) {

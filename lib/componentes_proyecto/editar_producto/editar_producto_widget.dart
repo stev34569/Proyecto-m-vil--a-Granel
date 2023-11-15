@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -41,15 +42,24 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
 
     _model.txtNombreController ??=
         TextEditingController(text: widget.productos?.nombre);
+    _model.txtNombreFocusNode ??= FocusNode();
+
     _model.txtCantidadController ??=
         TextEditingController(text: widget.productos?.cantidad?.toString());
+    _model.txtCantidadFocusNode ??= FocusNode();
+
     _model.txtPrecioController ??=
         TextEditingController(text: widget.productos?.precio?.toString());
+    _model.txtPrecioFocusNode ??= FocusNode();
+
     _model.txtPesoController ??= TextEditingController(
         text: valueOrDefault<String>(
       widget.productos?.peso?.peso,
       '0',
     ));
+    _model.txtPesoFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -250,6 +260,7 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.txtNombreController,
+                                    focusNode: _model.txtNombreFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -318,6 +329,7 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.txtCantidadController,
+                                    focusNode: _model.txtCantidadFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -383,6 +395,7 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.txtPrecioController,
+                                    focusNode: _model.txtPrecioFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -448,6 +461,7 @@ class _EditarProductoWidgetState extends State<EditarProductoWidget> {
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.txtPesoController,
+                                    focusNode: _model.txtPesoFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(

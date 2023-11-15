@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +40,13 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
 
     _model.txtNombreUsuarioController ??=
         TextEditingController(text: currentUserDisplayName);
+    _model.txtNombreUsuarioFocusNode ??= FocusNode();
+
     _model.txtTelefonoUsuarioController ??=
         TextEditingController(text: currentPhoneNumber);
+    _model.txtTelefonoUsuarioFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -126,6 +132,8 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
                                     builder: (context) => TextFormField(
                                       controller:
                                           _model.txtNombreUsuarioController,
+                                      focusNode:
+                                          _model.txtNombreUsuarioFocusNode,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -198,6 +206,8 @@ class _EditarUsuarioWidgetState extends State<EditarUsuarioWidget> {
                                     builder: (context) => TextFormField(
                                       controller:
                                           _model.txtTelefonoUsuarioController,
+                                      focusNode:
+                                          _model.txtTelefonoUsuarioFocusNode,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(

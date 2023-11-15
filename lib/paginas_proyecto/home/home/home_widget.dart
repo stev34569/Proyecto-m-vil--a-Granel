@@ -1,10 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +26,8 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -38,10 +39,21 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -49,7 +61,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           backgroundColor: Color(0xFF2072DF),
           automaticallyImplyLeading: false,
           title: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: AlignmentDirectional(0.00, 0.00),
             child: Text(
               'A Granel app',
               textAlign: TextAlign.center,
@@ -287,7 +299,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   16.0, 0.0, 16.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  context.pushNamed('chats');
+                                  context.pushNamed('chatsLista');
                                 },
                                 text: 'Mensajes',
                                 options: FFButtonOptions(
@@ -310,51 +322,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 30.0, 0.0),
-                            child: badges.Badge(
-                              badgeContent: Text(
-                                '0',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                      fontSize: 19.0,
-                                    ),
-                              ),
-                              showBadge: true,
-                              shape: badges.BadgeShape.circle,
-                              badgeColor: Color(0xFF2CEBDA),
-                              elevation: 4.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 8.0, 8.0, 8.0),
-                              position: badges.BadgePosition.topEnd(),
-                              animationType: badges.BadgeAnimationType.scale,
-                              toAnimate: true,
-                              child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: FlutterFlowIconButton(
-                                  borderColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  borderRadius: 10.0,
-                                  borderWidth: 1.0,
-                                  buttonSize: 50.0,
-                                  fillColor: Color(0xFF1F72DE),
-                                  icon: Icon(
-                                    Icons.chat,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    size: 34.0,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('chatsCopy');
-                                  },
                                 ),
                               ),
                             ),

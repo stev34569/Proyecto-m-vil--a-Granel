@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +32,21 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
     _model = createModel(context, () => RegistrarEmpleadoModel());
 
     _model.registrarNombreController ??= TextEditingController();
+    _model.registrarNombreFocusNode ??= FocusNode();
+
     _model.registrarNumeroController ??= TextEditingController();
+    _model.registrarNumeroFocusNode ??= FocusNode();
+
     _model.registrarCedulaController ??= TextEditingController();
+    _model.registrarCedulaFocusNode ??= FocusNode();
+
     _model.registrarCorreoController ??= TextEditingController();
+    _model.registrarCorreoFocusNode ??= FocusNode();
+
     _model.registrarCotrasenaController ??= TextEditingController();
+    _model.registrarCotrasenaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -46,10 +58,21 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -114,6 +137,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 0.0, 50.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.registrarNombreController,
+                              focusNode: _model.registrarNombreFocusNode,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Nombre completo',
@@ -185,6 +209,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 0.0, 12.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.registrarNumeroController,
+                              focusNode: _model.registrarNumeroFocusNode,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Número de teléfono',
@@ -256,6 +281,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 0.0, 12.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.registrarCedulaController,
+                              focusNode: _model.registrarCedulaFocusNode,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Cédula',
@@ -327,6 +353,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 0.0, 12.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.registrarCorreoController,
+                              focusNode: _model.registrarCorreoFocusNode,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
@@ -398,6 +425,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                 0.0, 12.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.registrarCotrasenaController,
+                              focusNode: _model.registrarCotrasenaFocusNode,
                               obscureText: !_model.registrarCotrasenaVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Contraseña',
@@ -478,7 +506,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1.00, 0.00),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 15.0, 0.0, 0.0),
@@ -495,7 +523,7 @@ class _RegistrarEmpleadoWidgetState extends State<RegistrarEmpleadoWidget> {
                                   children: [
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
+                                          AlignmentDirectional(-1.00, 0.00),
                                       child: AuthUserStreamWidget(
                                         builder: (context) => Theme(
                                           data: ThemeData(

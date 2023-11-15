@@ -10,6 +10,7 @@ import '/flutter_flow/upload_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,6 +36,9 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
     _model = createModel(context, () => CategoriaModel());
 
     _model.txtNombreCategoriaController ??= TextEditingController();
+    _model.txtNombreCategoriaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -46,10 +50,21 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF6AD9C4),
@@ -183,6 +198,7 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                         child: TextFormField(
                           controller: _model.txtNombreCategoriaController,
+                          focusNode: _model.txtNombreCategoriaFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -594,10 +610,14 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                                                 context: context,
                                                 builder: (context) {
                                                   return GestureDetector(
-                                                    onTap: () => FocusScope.of(
-                                                            context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode),
+                                                    onTap: () => _model
+                                                            .unfocusNode
+                                                            .canRequestFocus
+                                                        ? FocusScope.of(context)
+                                                            .requestFocus(_model
+                                                                .unfocusNode)
+                                                        : FocusScope.of(context)
+                                                            .unfocus(),
                                                     child: Padding(
                                                       padding: MediaQuery
                                                           .viewInsetsOf(
@@ -610,8 +630,8 @@ class _CategoriaWidgetState extends State<CategoriaWidget> {
                                                     ),
                                                   );
                                                 },
-                                              ).then(
-                                                  (value) => setState(() {}));
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
                                             },
                                           ),
                                           FlutterFlowIconButton(

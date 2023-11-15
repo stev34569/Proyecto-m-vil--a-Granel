@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -40,13 +41,20 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
 
     _model.txtNombreUsuarioController ??=
         TextEditingController(text: widget.usuarioSeleccionado?.displayName);
+    _model.txtNombreUsuarioFocusNode ??= FocusNode();
+
     _model.txtTelefonoUsuarioController ??=
         TextEditingController(text: widget.usuarioSeleccionado?.phoneNumber);
+    _model.txtTelefonoUsuarioFocusNode ??= FocusNode();
+
     _model.txtCedulaController ??= TextEditingController(
         text: valueOrDefault<String>(
       widget.usuarioSeleccionado?.cedula?.toString(),
       '1',
     ));
+    _model.txtCedulaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -131,6 +139,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                   child: TextFormField(
                                     controller:
                                         _model.txtNombreUsuarioController,
+                                    focusNode: _model.txtNombreUsuarioFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -200,6 +209,8 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                   child: TextFormField(
                                     controller:
                                         _model.txtTelefonoUsuarioController,
+                                    focusNode:
+                                        _model.txtTelefonoUsuarioFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -268,6 +279,7 @@ class _ActualizarUsuarioWidgetState extends State<ActualizarUsuarioWidget> {
                                       8.0, 0.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.txtCedulaController,
+                                    focusNode: _model.txtCedulaFocusNode,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(

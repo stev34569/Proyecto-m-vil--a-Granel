@@ -5,17 +5,20 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/random_data_util.dart' as random_data;
+import 'registrar_empleado_widget.dart' show RegistrarEmpleadoWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class RegistrarEmpleadoModel extends FlutterFlowModel {
+class RegistrarEmpleadoModel extends FlutterFlowModel<RegistrarEmpleadoWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for registrarNombre widget.
+  FocusNode? registrarNombreFocusNode;
   TextEditingController? registrarNombreController;
   String? Function(BuildContext, String?)? registrarNombreControllerValidator;
   String? _registrarNombreControllerValidator(
@@ -35,6 +38,7 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
   }
 
   // State field(s) for registrarNumero widget.
+  FocusNode? registrarNumeroFocusNode;
   TextEditingController? registrarNumeroController;
   String? Function(BuildContext, String?)? registrarNumeroControllerValidator;
   String? _registrarNumeroControllerValidator(
@@ -54,6 +58,7 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
   }
 
   // State field(s) for registrarCedula widget.
+  FocusNode? registrarCedulaFocusNode;
   TextEditingController? registrarCedulaController;
   String? Function(BuildContext, String?)? registrarCedulaControllerValidator;
   String? _registrarCedulaControllerValidator(
@@ -73,6 +78,7 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
   }
 
   // State field(s) for registrarCorreo widget.
+  FocusNode? registrarCorreoFocusNode;
   TextEditingController? registrarCorreoController;
   String? Function(BuildContext, String?)? registrarCorreoControllerValidator;
   String? _registrarCorreoControllerValidator(
@@ -92,6 +98,7 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
   }
 
   // State field(s) for registrarCotrasena widget.
+  FocusNode? registrarCotrasenaFocusNode;
   TextEditingController? registrarCotrasenaController;
   late bool registrarCotrasenaVisibility;
   String? Function(BuildContext, String?)?
@@ -129,10 +136,19 @@ class RegistrarEmpleadoModel extends FlutterFlowModel {
 
   void dispose() {
     unfocusNode.dispose();
+    registrarNombreFocusNode?.dispose();
     registrarNombreController?.dispose();
+
+    registrarNumeroFocusNode?.dispose();
     registrarNumeroController?.dispose();
+
+    registrarCedulaFocusNode?.dispose();
     registrarCedulaController?.dispose();
+
+    registrarCorreoFocusNode?.dispose();
     registrarCorreoController?.dispose();
+
+    registrarCotrasenaFocusNode?.dispose();
     registrarCotrasenaController?.dispose();
   }
 

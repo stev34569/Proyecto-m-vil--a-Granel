@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,16 +12,19 @@ export 'chat_item_model.dart';
 class ChatItemWidget extends StatefulWidget {
   const ChatItemWidget({
     Key? key,
-    required this.message,
-    required this.time,
-    required this.senderId,
-    required this.foto,
-  }) : super(key: key);
+    String? message,
+    this.time,
+    String? senderId,
+    String? foto,
+  })  : this.message = message ?? '0',
+        this.senderId = senderId ?? '0',
+        this.foto = foto ?? '0',
+        super(key: key);
 
-  final String? message;
+  final String message;
   final DateTime? time;
-  final String? senderId;
-  final String? foto;
+  final String senderId;
+  final String foto;
 
   @override
   _ChatItemWidgetState createState() => _ChatItemWidgetState();
@@ -39,6 +43,8 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatItemModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -54,7 +60,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
 
     return Stack(
       children: [
-        if (widget.senderId != currentUserUid)
+        if (valueOrDefault<bool>(
+          widget.senderId != currentUserUid,
+          true,
+        ))
           Container(
             width: MediaQuery.sizeOf(context).width * 1.0,
             height: 100.0,
@@ -75,7 +84,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     shape: BoxShape.circle,
                   ),
                   child: Image.network(
-                    widget.foto!,
+                    valueOrDefault<String>(
+                      widget.foto,
+                      '0',
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -86,7 +98,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 0.7,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color: FlutterFlowTheme.of(context).customColor6,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(24.0),
                           bottomRight: Radius.circular(24.0),
@@ -112,7 +124,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      widget.message!,
+                                      valueOrDefault<String>(
+                                        widget.message,
+                                        '0',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -129,7 +144,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  dateTimeFormat('jm', widget.time),
+                                  valueOrDefault<String>(
+                                    dateTimeFormat('jm', widget.time),
+                                    '0',
+                                  ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -150,7 +168,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               ],
             ),
           ),
-        if (widget.senderId == currentUserUid)
+        if (valueOrDefault<bool>(
+          widget.senderId == currentUserUid,
+          true,
+        ))
           Container(
             width: MediaQuery.sizeOf(context).width * 1.0,
             height: 100.0,
@@ -173,7 +194,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 0.7,
                         decoration: BoxDecoration(
-                          color: Color(0x4516BEF5),
+                          color: FlutterFlowTheme.of(context).customColor4,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(24.0),
                             bottomRight: Radius.circular(24.0),
@@ -199,7 +220,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        widget.message!,
+                                        valueOrDefault<String>(
+                                          widget.message,
+                                          '0',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -223,12 +247,17 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        dateTimeFormat('jm', widget.time),
+                                        valueOrDefault<String>(
+                                          dateTimeFormat('jm', widget.time),
+                                          '...',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Readex Pro',
-                                              color: Color(0x9A333333),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
                                               fontSize: 12.0,
                                               fontWeight: FontWeight.w600,
                                             ),

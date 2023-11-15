@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,9 +39,18 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
     _model = createModel(context, () => RegistrarProductoModel());
 
     _model.txtNombreController ??= TextEditingController();
+    _model.txtNombreFocusNode ??= FocusNode();
+
     _model.txtCantidadController ??= TextEditingController();
+    _model.txtCantidadFocusNode ??= FocusNode();
+
     _model.txtPesoController ??= TextEditingController();
+    _model.txtPesoFocusNode ??= FocusNode();
+
     _model.txtPrecioController ??= TextEditingController();
+    _model.txtPrecioFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -52,10 +62,21 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFCEEDE8),
@@ -121,7 +142,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.00, 0.00),
                           child: Container(
                             width: 160.0,
                             height: 160.0,
@@ -253,6 +274,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                               20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtNombreController,
+                            focusNode: _model.txtNombreFocusNode,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -262,14 +284,16 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                   .labelMedium
                                   .override(
                                     fontFamily: 'Montserrat',
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
                                     fontSize: 16.0,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
                                     fontFamily: 'Readex Pro',
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -307,8 +331,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 21.0,
                                 ),
                             textAlign: TextAlign.start,
@@ -329,6 +353,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                               20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtCantidadController,
+                            focusNode: _model.txtCantidadFocusNode,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -382,8 +407,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 21.0,
                                 ),
                             textAlign: TextAlign.start,
@@ -404,11 +429,12 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                               20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtPesoController,
+                            focusNode: _model.txtPesoFocusNode,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
-                              labelText: 'Peso',
+                              labelText: 'Peso (Kg)',
                               labelStyle: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
@@ -457,8 +483,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 21.0,
                                 ),
                             textAlign: TextAlign.start,
@@ -478,6 +504,7 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                               20.0, 17.0, 20.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtPrecioController,
+                            focusNode: _model.txtPrecioFocusNode,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -531,8 +558,8 @@ class _RegistrarProductoWidgetState extends State<RegistrarProductoWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Montserrat',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 21.0,
                                 ),
                             textAlign: TextAlign.start,

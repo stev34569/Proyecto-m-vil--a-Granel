@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,15 +34,32 @@ class _LoginWidgetState extends State<LoginWidget>
       vsync: this,
       length: 2,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
     _model.emailAddressLoginController ??= TextEditingController();
+    _model.emailAddressLoginFocusNode ??= FocusNode();
+
     _model.passwordLoginController ??= TextEditingController();
+    _model.passwordLoginFocusNode ??= FocusNode();
+
     _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressFocusNode ??= FocusNode();
+
     _model.nombreCompletoController ??= TextEditingController();
+    _model.nombreCompletoFocusNode ??= FocusNode();
+
     _model.numeroTelefonicoController ??= TextEditingController();
+    _model.numeroTelefonicoFocusNode ??= FocusNode();
+
     _model.cedulaController ??= TextEditingController();
+    _model.cedulaFocusNode ??= FocusNode();
+
     _model.passwordController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
+
     _model.passwordConfirmController ??= TextEditingController();
+    _model.passwordConfirmFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -53,10 +71,21 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF14181B),
@@ -136,7 +165,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                 ),
                               ],
                               controller: _model.tabBarController,
-                              onTap: (value) => setState(() {}),
                             ),
                           ),
                           Expanded(
@@ -157,6 +185,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller: _model
                                                 .emailAddressLoginController,
+                                            focusNode: _model
+                                                .emailAddressLoginFocusNode,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               labelText: 'Email ',
@@ -241,6 +271,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller:
                                                 _model.passwordLoginController,
+                                            focusNode:
+                                                _model.passwordLoginFocusNode,
                                             obscureText:
                                                 !_model.passwordLoginVisibility,
                                             decoration: InputDecoration(
@@ -380,7 +412,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         fontFamily:
                                                             'Lexend Deca',
                                                         color: Colors.white,
-                                                        fontSize: 16.0,
+                                                        fontSize: 20.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -446,6 +478,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller:
                                                 _model.emailAddressController,
+                                            focusNode:
+                                                _model.emailAddressFocusNode,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               labelText: 'Email',
@@ -531,6 +565,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller:
                                                 _model.nombreCompletoController,
+                                            focusNode:
+                                                _model.nombreCompletoFocusNode,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               labelText: 'Nombre completo',
@@ -616,6 +652,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller: _model
                                                 .numeroTelefonicoController,
+                                            focusNode: _model
+                                                .numeroTelefonicoFocusNode,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               labelText: 'Número de teléfono',
@@ -700,6 +738,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   0.0, 12.0, 0.0, 0.0),
                                           child: TextFormField(
                                             controller: _model.cedulaController,
+                                            focusNode: _model.cedulaFocusNode,
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               labelText: 'Cédula',
@@ -785,6 +824,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller:
                                                 _model.passwordController,
+                                            focusNode: _model.passwordFocusNode,
                                             obscureText:
                                                 !_model.passwordVisibility,
                                             decoration: InputDecoration(
@@ -889,6 +929,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           child: TextFormField(
                                             controller: _model
                                                 .passwordConfirmController,
+                                            focusNode:
+                                                _model.passwordConfirmFocusNode,
                                             obscureText: !_model
                                                 .passwordConfirmVisibility,
                                             decoration: InputDecoration(
@@ -1057,7 +1099,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         fontFamily:
                                                             'Lexend Deca',
                                                         color: Colors.white,
-                                                        fontSize: 16.0,
+                                                        fontSize: 20.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),

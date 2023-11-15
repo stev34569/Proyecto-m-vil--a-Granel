@@ -24,15 +24,18 @@ export '/usuarios/perfil_empleado/perfil_empleado_widget.dart'
     show PerfilEmpleadoWidget;
 export '/pruebas/lista_usuarios_copy/lista_usuarios_copy_widget.dart'
     show ListaUsuariosCopyWidget;
-export '/mensajes/chats/chats_widget.dart' show ChatsWidget;
+export '/pruebas/mugi_mensajes_pruebas/chats/chats_widget.dart'
+    show ChatsWidget;
 export '/mensajes/actividad_usuarios/actividad_usuarios_widget.dart'
     show ActividadUsuariosWidget;
 export '/pruebas/cambiar_contrasena_copy/cambiar_contrasena_copy_widget.dart'
     show CambiarContrasenaCopyWidget;
 export '/usuarios/cambiar_correo/cambiar_correo_widget.dart'
     show CambiarCorreoWidget;
-export '/mugi_mensajes/chats_copy/chats_copy_widget.dart' show ChatsCopyWidget;
-export '/mugi_mensajes/actividad_usuarios_copy/actividad_usuarios_copy_widget.dart'
+export '/pruebas/mugi_mensajes_pruebas/chats_copy/chats_copy_widget.dart'
+    show ChatsCopyWidget;
+export '/pruebas/mugi_mensajes_pruebas/actividad_usuarios_copy/actividad_usuarios_copy_widget.dart'
     show ActividadUsuariosCopyWidget;
-export '/mugi_mensajes/usuarios_chats/usuarios_chats_widget.dart'
+export '/pruebas/mugi_mensajes_pruebas/usuarios_chats/usuarios_chats_widget.dart'
     show UsuariosChatsWidget;
+export '/mensajes/chats_lista/chats_lista_widget.dart' show ChatsListaWidget;

@@ -4,9 +4,11 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,6 +49,8 @@ class _ChatsWidgetState extends State<ChatsWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,10 +62,21 @@ class _ChatsWidgetState extends State<ChatsWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFE6E8F4),
@@ -172,7 +187,7 @@ class _ChatsWidgetState extends State<ChatsWidget>
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.00, 0.00),
                               child: Text(
                                 'Chat A Granel',
                                 textAlign: TextAlign.center,
@@ -202,7 +217,12 @@ class _ChatsWidgetState extends State<ChatsWidget>
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(),
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord.where(
+                            'uid',
+                            isNotEqualTo: currentUserUid,
+                          ),
+                        ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
@@ -279,88 +299,121 @@ class _ChatsWidgetState extends State<ChatsWidget>
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Container(
-                                                    width: 57.0,
-                                                    height: 57.0,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.network(
-                                                      valueOrDefault<String>(
-                                                        listViewUsersRecord
-                                                            .photoUrl,
-                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/qymre9eth7zx/e368718f-7958-4032-8347-5e1737b9e9f5.jpg',
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Container(
+                                                      width: 57.0,
+                                                      height: 57.0,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
                                                       ),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(15.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
+                                                      child: Image.network(
+                                                        valueOrDefault<String>(
                                                           listViewUsersRecord
-                                                              .displayName,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Readex Pro',
-                                                                fontSize: 17.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
+                                                              .photoUrl,
+                                                          'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/qymre9eth7zx/e368718f-7958-4032-8347-5e1737b9e9f5.jpg',
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      5.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
                                                             listViewUsersRecord
-                                                                .email,
+                                                                .displayName,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Readex Pro',
-                                                                  color: Color(
-                                                                      0xFFBEBEBE),
                                                                   fontSize:
-                                                                      15.0,
+                                                                      17.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
                                                                 ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              listViewUsersRecord
+                                                                  .email,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    color: Color(
+                                                                        0xFFBEBEBE),
+                                                                    fontSize:
+                                                                        12.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              listViewUsersRecord
+                                                                      .administrador
+                                                                  ? 'Administrador'
+                                                                  : 'Empleado',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    color: Color(
+                                                                        0xFFBEBEBE),
+                                                                    fontSize:
+                                                                        12.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -377,7 +430,7 @@ class _ChatsWidgetState extends State<ChatsWidget>
                                                     .override(
                                                       fontFamily: 'Readex Pro',
                                                       color: Color(0xFF828282),
-                                                      fontSize: 12.0,
+                                                      fontSize: 10.0,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                     ),
@@ -390,7 +443,7 @@ class _ChatsWidgetState extends State<ChatsWidget>
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    size: 30.0,
+                                                    size: 20.0,
                                                   ),
                                                   FaIcon(
                                                     FontAwesomeIcons
@@ -398,7 +451,7 @@ class _ChatsWidgetState extends State<ChatsWidget>
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    size: 30.0,
+                                                    size: 20.0,
                                                   ),
                                                 ],
                                               ),

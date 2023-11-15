@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,8 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatsCopyModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -41,10 +44,21 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFFE6E8F4),
@@ -138,6 +152,17 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                 ),
               ),
               Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                child: Text(
+                  'Usuarios disponibles para chatear',
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        color: FlutterFlowTheme.of(context).customColor3,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(5.0, 15.0, 5.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -147,29 +172,6 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    7.0, 0.0, 0.0, 0.0),
-                                child: Container(
-                                  width: 60.0,
-                                  height: 60.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Color(0xFF282D32),
-                                    size: 24.0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
@@ -194,10 +196,7 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                                       );
                                     }
                                     List<UsersRecord> rowUsersRecordList =
-                                        snapshot.data!
-                                            .where(
-                                                (u) => u.uid != currentUserUid)
-                                            .toList();
+                                        snapshot.data!;
                                     return Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: List.generate(
@@ -223,7 +222,7 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                                                     userA: currentUserReference,
                                                     userB: rowUsersRecord
                                                         .reference,
-                                                    lastMessage: 'NA',
+                                                    lastMessage: '...',
                                                     lastMessageTime:
                                                         getCurrentTimestamp,
                                                     image:
@@ -270,10 +269,10 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              context.pushNamed('usuariosChats');
                             },
-                            text: 'ver todas',
+                            text: 'Ver lista de usuarios',
                             options: FFButtonOptions(
                               height: 35.0,
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -398,11 +397,19 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                                               ),
                                             }.withoutNulls,
                                           );
+
+                                          await listViewChatsGranelRecord
+                                              .reference
+                                              .update(
+                                                  createChatsGranelRecordData(
+                                            messageSeen: true,
+                                          ));
                                         },
                                         child: Container(
                                           width: 100.0,
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
                                             boxShadow: [
                                               BoxShadow(
                                                 blurRadius: 4.0,
@@ -423,171 +430,185 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        if (currentUserReference !=
-                                                            listViewChatsGranelRecord
-                                                                .user)
-                                                          StreamBuilder<
-                                                              UsersRecord>(
-                                                            stream: UsersRecord
-                                                                .getDocument(
-                                                                    listViewChatsGranelRecord
-                                                                        .userA!),
-                                                            builder: (context,
-                                                                snapshot) {
-                                                              // Customize what your widget looks like when it's loading.
-                                                              if (!snapshot
-                                                                  .hasData) {
-                                                                return Center(
-                                                                  child:
-                                                                      SizedBox(
-                                                                    width: 50.0,
-                                                                    height:
-                                                                        50.0,
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          if (currentUserReference !=
+                                                              listViewChatsGranelRecord
+                                                                  .user)
+                                                            StreamBuilder<
+                                                                UsersRecord>(
+                                                              stream: UsersRecord
+                                                                  .getDocument(
+                                                                      listViewChatsGranelRecord
+                                                                          .userA!),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                // Customize what your widget looks like when it's loading.
+                                                                if (!snapshot
+                                                                    .hasData) {
+                                                                  return Center(
                                                                     child:
-                                                                        SpinKitThreeBounce(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                      size:
+                                                                        SizedBox(
+                                                                      width:
                                                                           50.0,
+                                                                      height:
+                                                                          50.0,
+                                                                      child:
+                                                                          SpinKitThreeBounce(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        size:
+                                                                            50.0,
+                                                                      ),
                                                                     ),
+                                                                  );
+                                                                }
+                                                                final circleImageUsersRecord =
+                                                                    snapshot
+                                                                        .data!;
+                                                                return Container(
+                                                                  width: 50.0,
+                                                                  height: 50.0,
+                                                                  clipBehavior:
+                                                                      Clip.antiAlias,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Image
+                                                                      .network(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      circleImageUsersRecord
+                                                                          .photoUrl,
+                                                                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
+                                                                    ),
+                                                                    fit: BoxFit
+                                                                        .cover,
                                                                   ),
                                                                 );
-                                                              }
-                                                              final circleImageUsersRecord =
-                                                                  snapshot
-                                                                      .data!;
-                                                              return Container(
-                                                                width: 50.0,
-                                                                height: 50.0,
-                                                                clipBehavior: Clip
-                                                                    .antiAlias,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                                child: Image
-                                                                    .network(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    circleImageUsersRecord
-                                                                        .photoUrl,
-                                                                    'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
-                                                                  ),
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        if (currentUserReference ==
-                                                            listViewChatsGranelRecord
-                                                                .user)
-                                                          Container(
-                                                            width: 50.0,
-                                                            height: 50.0,
-                                                            clipBehavior:
-                                                                Clip.antiAlias,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
+                                                              },
                                                             ),
-                                                            child:
-                                                                Image.network(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                containerUsersRecord
-                                                                    .photoUrl,
-                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
+                                                          if (currentUserReference ==
+                                                              listViewChatsGranelRecord
+                                                                  .user)
+                                                            Container(
+                                                              width: 50.0,
+                                                              height: 50.0,
+                                                              clipBehavior: Clip
+                                                                  .antiAlias,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
                                                               ),
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      15.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              if (currentUserReference !=
-                                                                  listViewChatsGranelRecord
-                                                                      .user)
-                                                                StreamBuilder<
-                                                                    UsersRecord>(
-                                                                  stream: UsersRecord
-                                                                      .getDocument(
-                                                                          listViewChatsGranelRecord
-                                                                              .userA!),
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    // Customize what your widget looks like when it's loading.
-                                                                    if (!snapshot
-                                                                        .hasData) {
-                                                                      return Center(
-                                                                        child:
-                                                                            SizedBox(
-                                                                          width:
-                                                                              50.0,
-                                                                          height:
-                                                                              50.0,
-                                                                          child:
-                                                                              SpinKitThreeBounce(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primary,
-                                                                            size:
-                                                                                50.0,
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    }
-                                                                    final textUsersRecord =
-                                                                        snapshot
-                                                                            .data!;
-                                                                    return Text(
-                                                                      textUsersRecord
-                                                                          .displayName,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Readex Pro',
-                                                                            fontSize:
-                                                                                13.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    );
-                                                                  },
+                                                              child:
+                                                                  Image.network(
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  containerUsersRecord
+                                                                      .photoUrl,
+                                                                  'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/proyecto-granel-ed9sbw/assets/rnd19pssnp76/WhatsApp_Image_2023-07-18_at_7.23.40_PM.jpeg',
                                                                 ),
-                                                              if (currentUserReference ==
-                                                                  listViewChatsGranelRecord
-                                                                      .user)
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        15.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                if (currentUserReference !=
+                                                                    listViewChatsGranelRecord
+                                                                        .user)
+                                                                  StreamBuilder<
+                                                                      UsersRecord>(
+                                                                    stream: UsersRecord.getDocument(
+                                                                        listViewChatsGranelRecord
+                                                                            .userA!),
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      // Customize what your widget looks like when it's loading.
+                                                                      if (!snapshot
+                                                                          .hasData) {
+                                                                        return Center(
+                                                                          child:
+                                                                              SizedBox(
+                                                                            width:
+                                                                                50.0,
+                                                                            height:
+                                                                                50.0,
+                                                                            child:
+                                                                                SpinKitThreeBounce(
+                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                              size: 50.0,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      }
+                                                                      final textUsersRecord =
+                                                                          snapshot
+                                                                              .data!;
+                                                                      return Text(
+                                                                        textUsersRecord
+                                                                            .displayName,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Readex Pro',
+                                                                              fontSize: 16.0,
+                                                                              fontWeight: FontWeight.w500,
+                                                                            ),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                if (currentUserReference ==
+                                                                    listViewChatsGranelRecord
+                                                                        .user)
+                                                                  Text(
+                                                                    containerUsersRecord
+                                                                        .displayName,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Readex Pro',
+                                                                          fontSize:
+                                                                              16.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                        ),
+                                                                  ),
                                                                 Text(
                                                                   containerUsersRecord
-                                                                      .displayName,
+                                                                          .administrador
+                                                                      ? 'Administrador'
+                                                                      : 'Empleado',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -595,41 +616,47 @@ class _ChatsCopyWidgetState extends State<ChatsCopyWidget> {
                                                                         fontFamily:
                                                                             'Readex Pro',
                                                                         fontSize:
-                                                                            12.0,
+                                                                            13.0,
                                                                         fontWeight:
-                                                                            FontWeight.w500,
+                                                                            FontWeight.normal,
                                                                       ),
                                                                 ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child: Text(
-                                                                  listViewChatsGranelRecord
-                                                                      .lastMessage,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Readex Pro',
-                                                                        color: Color(
-                                                                            0xFFBEBEBE),
-                                                                        fontSize:
-                                                                            10.0,
-                                                                      ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    listViewChatsGranelRecord
+                                                                        .lastMessage
+                                                                        .maybeHandleOverflow(
+                                                                      maxChars:
+                                                                          16,
+                                                                      replacement:
+                                                                          '…',
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Readex Pro',
+                                                                          color:
+                                                                              Color(0xFFBEBEBE),
+                                                                          fontSize:
+                                                                              10.0,
+                                                                        ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 Column(
                                                   mainAxisSize:

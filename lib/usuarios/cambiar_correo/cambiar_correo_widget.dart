@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -83,7 +84,12 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
     _model = createModel(context, () => CambiarCorreoModel());
 
     _model.nuevoCorreoController ??= TextEditingController();
+    _model.nuevoCorreoFocusNode ??= FocusNode();
+
     _model.contrasenaController ??= TextEditingController();
+    _model.contrasenaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -95,10 +101,21 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF14181B),
@@ -161,7 +178,7 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.00, 0.00),
                         child: Text(
                           'Cambiar correo',
                           textAlign: TextAlign.center,
@@ -185,6 +202,7 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
                       EdgeInsetsDirectional.fromSTEB(30.0, 20.0, 30.0, 0.0),
                   child: TextFormField(
                     controller: _model.nuevoCorreoController,
+                    focusNode: _model.nuevoCorreoFocusNode,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Ingrese su nuevo correo',
@@ -252,6 +270,7 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
                       EdgeInsetsDirectional.fromSTEB(30.0, 20.0, 30.0, 0.0),
                   child: TextFormField(
                     controller: _model.contrasenaController,
+                    focusNode: _model.contrasenaFocusNode,
                     obscureText: !_model.contrasenaVisibility,
                     decoration: InputDecoration(
                       labelText: 'Ingrese su contraseña actual',
@@ -339,8 +358,10 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
                         context: context,
                         builder: (context) {
                           return GestureDetector(
-                            onTap: () => FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode),
+                            onTap: () => _model.unfocusNode.canRequestFocus
+                                ? FocusScope.of(context)
+                                    .requestFocus(_model.unfocusNode)
+                                : FocusScope.of(context).unfocus(),
                             child: Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: ConfirmarCambioCorreoWidget(
@@ -350,7 +371,7 @@ class _CambiarCorreoWidgetState extends State<CambiarCorreoWidget>
                             ),
                           );
                         },
-                      ).then((value) => setState(() {}));
+                      ).then((value) => safeSetState(() {}));
                     },
                     text: 'Actualizar correo',
                     options: FFButtonOptions(

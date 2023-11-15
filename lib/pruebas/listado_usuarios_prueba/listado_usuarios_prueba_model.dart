@@ -4,16 +4,21 @@ import '/componentes_proyecto/actualizar_usuario/actualizar_usuario_widget.dart'
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'listado_usuarios_prueba_widget.dart' show ListadoUsuariosPruebaWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ListadoUsuariosPruebaModel extends FlutterFlowModel {
+class ListadoUsuariosPruebaModel
+    extends FlutterFlowModel<ListadoUsuariosPruebaWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
   // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
@@ -23,6 +28,7 @@ class ListadoUsuariosPruebaModel extends FlutterFlowModel {
 
   void dispose() {
     unfocusNode.dispose();
+    textFieldFocusNode?.dispose();
     textController?.dispose();
   }
 

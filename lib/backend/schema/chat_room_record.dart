@@ -31,11 +31,6 @@ class ChatRoomRecord extends FirestoreRecord {
   String get receiverId => _receiverId ?? '';
   bool hasReceiverId() => _receiverId != null;
 
-  // "arrayOfTa" field.
-  List<String>? _arrayOfTa;
-  List<String> get arrayOfTa => _arrayOfTa ?? const [];
-  bool hasArrayOfTa() => _arrayOfTa != null;
-
   // "time" field.
   DateTime? _time;
   DateTime? get time => _time;
@@ -50,7 +45,6 @@ class ChatRoomRecord extends FirestoreRecord {
     _message = snapshotData['message'] as String?;
     _senderId = snapshotData['senderId'] as String?;
     _receiverId = snapshotData['receiverId'] as String?;
-    _arrayOfTa = getDataList(snapshotData['arrayOfTa']);
     _time = snapshotData['time'] as DateTime?;
     _idConversacion = snapshotData['idConversacion'] as String?;
   }
@@ -114,24 +108,16 @@ class ChatRoomRecordDocumentEquality implements Equality<ChatRoomRecord> {
 
   @override
   bool equals(ChatRoomRecord? e1, ChatRoomRecord? e2) {
-    const listEquality = ListEquality();
     return e1?.message == e2?.message &&
         e1?.senderId == e2?.senderId &&
         e1?.receiverId == e2?.receiverId &&
-        listEquality.equals(e1?.arrayOfTa, e2?.arrayOfTa) &&
         e1?.time == e2?.time &&
         e1?.idConversacion == e2?.idConversacion;
   }
 
   @override
-  int hash(ChatRoomRecord? e) => const ListEquality().hash([
-        e?.message,
-        e?.senderId,
-        e?.receiverId,
-        e?.arrayOfTa,
-        e?.time,
-        e?.idConversacion
-      ]);
+  int hash(ChatRoomRecord? e) => const ListEquality().hash(
+      [e?.message, e?.senderId, e?.receiverId, e?.time, e?.idConversacion]);
 
   @override
   bool isValidKey(Object? o) => o is ChatRoomRecord;

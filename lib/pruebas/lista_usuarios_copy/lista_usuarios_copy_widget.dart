@@ -4,8 +4,10 @@ import '/componentes_proyecto/actualizar_usuario/actualizar_usuario_widget.dart'
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +34,9 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
     _model = createModel(context, () => ListaUsuariosCopyModel());
 
     _model.txtBusquedaController ??= TextEditingController();
+    _model.txtBusquedaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -43,6 +48,15 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<List<UsersRecord>>(
@@ -160,7 +174,7 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    alignment: AlignmentDirectional(0.00, 0.00),
                                     child: AuthUserStreamWidget(
                                       builder: (context) => Text(
                                         currentUserDisplayName,
@@ -212,15 +226,18 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
                                 12.0, 0.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.txtBusquedaController,
+                              focusNode: _model.txtBusquedaFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.txtBusquedaController',
                                 Duration(milliseconds: 100),
                                 () async {
-                                  setState(() {
+                                  safeSetState(() {
                                     _model.simpleSearchResults = TextSearch(
                                       listaUsuariosCopyUsersRecordList
                                           .map(
-                                            (record) => TextSearchItem(record, [
+                                            (record) =>
+                                                TextSearchItem.fromTerms(
+                                                    record, [
                                               record.displayName!,
                                               record.phoneNumber!
                                             ]),
@@ -633,7 +650,7 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
                                                                   );
                                                                 },
                                                               ).then((value) =>
-                                                                  setState(
+                                                                  safeSetState(
                                                                       () {}));
                                                             },
                                                           ),
@@ -1047,7 +1064,7 @@ class _ListaUsuariosCopyWidgetState extends State<ListaUsuariosCopyWidget> {
                                                                   );
                                                                 },
                                                               ).then((value) =>
-                                                                  setState(
+                                                                  safeSetState(
                                                                       () {}));
                                                             },
                                                           ),

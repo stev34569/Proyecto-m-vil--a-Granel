@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,6 +77,9 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
     _model = createModel(context, () => ListaUsuariosModel());
 
     _model.txtBusquedaController ??= TextEditingController();
+    _model.txtBusquedaFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -87,6 +91,15 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<List<UsersRecord>>(
@@ -209,29 +222,32 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.55,
-                                  height: 60.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: AuthUserStreamWidget(
-                                      builder: (context) => Text(
-                                        currentUserDisplayName,
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineSmall
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 25.0,
-                                            ),
+                                Flexible(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.55,
+                                    height: 60.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Align(
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          currentUserDisplayName,
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineSmall
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 25.0,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -273,15 +289,16 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                               12.0, 0.0, 0.0, 0.0),
                           child: TextFormField(
                             controller: _model.txtBusquedaController,
+                            focusNode: _model.txtBusquedaFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.txtBusquedaController',
                               Duration(milliseconds: 100),
                               () async {
-                                setState(() {
+                                safeSetState(() {
                                   _model.simpleSearchResults = TextSearch(
                                     listaUsuariosUsersRecordList
                                         .map(
-                                          (record) => TextSearchItem(
+                                          (record) => TextSearchItem.fromTerms(
                                               record, [record.displayName!]),
                                         )
                                         .toList(),
@@ -310,7 +327,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                               prefixIcon: Icon(
                                 Icons.search_sharp,
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                    FlutterFlowTheme.of(context).customColor3,
                               ),
                             ),
                             style: FlutterFlowTheme.of(context).bodyLarge,
@@ -349,7 +366,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                         },
                         child: Icon(
                           Icons.close,
-                          color: FlutterFlowTheme.of(context).secondaryText,
+                          color: FlutterFlowTheme.of(context).customColor3,
                           size: 30.0,
                         ),
                       ),
@@ -750,7 +767,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                 );
                                                               },
                                                             ).then((value) =>
-                                                                setState(
+                                                                safeSetState(
                                                                     () {}));
                                                           },
                                                         ),
@@ -817,7 +834,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                 );
                                                               },
                                                             ).then((value) =>
-                                                                setState(
+                                                                safeSetState(
                                                                     () {}));
                                                           },
                                                         ),
@@ -1219,7 +1236,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                 );
                                                               },
                                                             ).then((value) =>
-                                                                setState(
+                                                                safeSetState(
                                                                     () {}));
                                                           },
                                                         ),
@@ -1286,7 +1303,7 @@ class _ListaUsuariosWidgetState extends State<ListaUsuariosWidget>
                                                                 );
                                                               },
                                                             ).then((value) =>
-                                                                setState(
+                                                                safeSetState(
                                                                     () {}));
                                                           },
                                                         ),

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +35,11 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
       vsync: this,
       length: 1,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
     _model.emailController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -47,10 +51,21 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF14181B),
@@ -84,33 +99,43 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0.00, 0.00),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 300.0, 0.0),
-                      child: Container(
-                        width: 54.0,
-                        height: 52.0,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              3.0, 0.0, 300.0, 10.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.safePop();
-                            },
-                            child: Icon(
-                              Icons.reply,
-                              color: FlutterFlowTheme.of(context).customColor5,
-                              size: 45.0,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.safePop();
+                        },
+                        child: Container(
+                          width: 54.0,
+                          height: 52.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                3.0, 0.0, 300.0, 10.0),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.safePop();
+                              },
+                              child: Icon(
+                                Icons.reply,
+                                color:
+                                    FlutterFlowTheme.of(context).customColor5,
+                                size: 45.0,
+                              ),
                             ),
                           ),
                         ),
@@ -164,7 +189,6 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
                               ),
                             ],
                             controller: _model.tabBarController,
-                            onTap: (value) => setState(() {}),
                           ),
                         ),
                         Expanded(
@@ -183,6 +207,7 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
                                             0.0, 20.0, 0.0, 0.0),
                                         child: TextFormField(
                                           controller: _model.emailController,
+                                          focusNode: _model.emailFocusNode,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             labelText: 'Correo',
@@ -291,10 +316,14 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -304,7 +333,8 @@ class _RecuperarContrasenaWidgetState extends State<RecuperarContrasenaWidget>
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => setState(() {}));
+                                            ).then(
+                                                (value) => safeSetState(() {}));
                                           },
                                           text: 'Recuperar contraseña',
                                           options: FFButtonOptions(

@@ -4,12 +4,14 @@ import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'login_widget.dart' show LoginWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class LoginModel extends FlutterFlowModel {
+class LoginModel extends FlutterFlowModel<LoginWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -20,6 +22,7 @@ class LoginModel extends FlutterFlowModel {
       tabBarController != null ? tabBarController!.index : 0;
 
   // State field(s) for emailAddress_Login widget.
+  FocusNode? emailAddressLoginFocusNode;
   TextEditingController? emailAddressLoginController;
   String? Function(BuildContext, String?)? emailAddressLoginControllerValidator;
   String? _emailAddressLoginControllerValidator(
@@ -39,6 +42,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for password_Login widget.
+  FocusNode? passwordLoginFocusNode;
   TextEditingController? passwordLoginController;
   late bool passwordLoginVisibility;
   String? Function(BuildContext, String?)? passwordLoginControllerValidator;
@@ -58,6 +62,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for emailAddress widget.
+  FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
   String? _emailAddressControllerValidator(BuildContext context, String? val) {
@@ -76,6 +81,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for nombreCompleto widget.
+  FocusNode? nombreCompletoFocusNode;
   TextEditingController? nombreCompletoController;
   String? Function(BuildContext, String?)? nombreCompletoControllerValidator;
   String? _nombreCompletoControllerValidator(
@@ -95,6 +101,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for numeroTelefonico widget.
+  FocusNode? numeroTelefonicoFocusNode;
   TextEditingController? numeroTelefonicoController;
   String? Function(BuildContext, String?)? numeroTelefonicoControllerValidator;
   String? _numeroTelefonicoControllerValidator(
@@ -114,6 +121,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for cedula widget.
+  FocusNode? cedulaFocusNode;
   TextEditingController? cedulaController;
   String? Function(BuildContext, String?)? cedulaControllerValidator;
   String? _cedulaControllerValidator(BuildContext context, String? val) {
@@ -132,6 +140,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for password widget.
+  FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordControllerValidator;
@@ -151,6 +160,7 @@ class LoginModel extends FlutterFlowModel {
   }
 
   // State field(s) for passwordConfirm widget.
+  FocusNode? passwordConfirmFocusNode;
   TextEditingController? passwordConfirmController;
   late bool passwordConfirmVisibility;
   String? Function(BuildContext, String?)? passwordConfirmControllerValidator;
@@ -190,13 +200,28 @@ class LoginModel extends FlutterFlowModel {
   void dispose() {
     unfocusNode.dispose();
     tabBarController?.dispose();
+    emailAddressLoginFocusNode?.dispose();
     emailAddressLoginController?.dispose();
+
+    passwordLoginFocusNode?.dispose();
     passwordLoginController?.dispose();
+
+    emailAddressFocusNode?.dispose();
     emailAddressController?.dispose();
+
+    nombreCompletoFocusNode?.dispose();
     nombreCompletoController?.dispose();
+
+    numeroTelefonicoFocusNode?.dispose();
     numeroTelefonicoController?.dispose();
+
+    cedulaFocusNode?.dispose();
     cedulaController?.dispose();
+
+    passwordFocusNode?.dispose();
     passwordController?.dispose();
+
+    passwordConfirmFocusNode?.dispose();
     passwordConfirmController?.dispose();
   }
 
